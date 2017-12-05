@@ -10,8 +10,6 @@ import pandas as pd
 from keras.models import Sequential 
 from keras.layers import Dense, Dropout
 import matplotlib.pyplot as plt
-import numpy as np
-
 
 # Part 1: import data
 
@@ -41,19 +39,19 @@ def baseline_model():
     model.add(Dense(activation="relu", input_dim=1191, units=700, kernel_initializer="uniform"))
 
     # Dropout to aid overfitting
-    model.add(Dropout(0.25))
+    model.add(Dropout(0.285))
 
     # Output layer
-    model.add(Dense(activation="linear", input_dim=700, units=400, kernel_initializer="uniform"))
+    model.add(Dense(activation="relu", input_dim=700, units=400, kernel_initializer="uniform"))
 
     # Compile the ANN
-    model.compile(optimizer="adagrad", loss="mean_squared_error", metrics=["accuracy"])
+    model.compile(optimizer="adam", loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
     
     return model
 
 # Fit the ANN to the training set
 model = baseline_model()
-result = model.fit(X_train, y_train, batch_size=10, nb_epoch=100, validation_data=(X_test, y_test))
+result = model.fit(X_train, y_train, batch_size=50, nb_epoch=550, validation_data=(X_test, y_test))
 
 
 # Part 3: analyze results
