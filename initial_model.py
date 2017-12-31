@@ -7,13 +7,28 @@
 ### using model.add(Dense(800, kernel_initializer='uniform', activation='relu'))
 ### Test accuracy: 0.78021977105
 
+# Functions
+def cos_sim(a, b):
+	"""Takes 2 vectors a, b and returns the cosine similarity according 
+	to the definition of the dot product
+	"""
+	dot_product = np.dot(a, b)
+	norm_a = np.linalg.norm(a)
+	norm_b = np.linalg.norm(b)
+	return dot_product / (norm_a * norm_b)
+
 # SCRIPT PARAMTERES
 epoch_amount = 2000 # the amount of epochs for training
-peak_label_height = 500 # the threshold value to display the x value of a peak on the graph 
+num_comparison_plots_to_show = 10 # number of spectrum similarity to show
+
+# Graph Permaters
+peak_label_height = 100 # the threshold value to display the x value of a peak on the graph 
 graph_width = 12 # height of the graphs displayed
 graph_height = 7 # width of the graphs displayed
-num_comparison_plots_to_show = 10 # number of spectrum similarity to show
-graph_label_text_y_offset = 25 # the amount tot offset the labels on the graph of the peaks
+graph_label_text_y_offset = 35 # the amount tot offset the labels on the graph of the peaks
+graph_trim_peak_height = 50
+chart_bar_width = 0.4 # width of bar charts
+
 
 import pandas as pd
 
@@ -142,39 +157,112 @@ for i in range(0, num_comparison_plots_to_show):
     # transform the "actual" y values to negative
     S = -1
     y_test_negative = S*y_test[i].astype(np.float)
-    
-    # create basic argumentst needed to be passed intto tthe plt
-    N = len(y_pred[i])
-    x = range(N)
-    width = 0.5 # width of bar charts
-    
+        
     # adjust size of plot
     fig_size = plt.rcParams["figure.figsize"]
     fig_size[0] = graph_width # width
     fig_size[1] = graph_height # height
     plt.rcParams["figure.figsize"] = fig_size
+    
+    
+    y_1_comp = y_test[i].astype(np.float)
+    y_2_comp = y_pred[i]
+    sim_value = cos_sim(y_1_comp, y_2_comp)
+    print("Sim value!: ", sim_value)
+    
+    len_y_pred = len(y_pred[i])
+    
+    # search predicted values and limit the graph to the smallest value to "beautify" the graph from right
+    prediction_j_trim_value = 0
+    for j in range(0, len_y_pred):        
+        index_cut_value = len_y_pred - j - 1
+        
+        peak_height_value = y_pred[i][index_cut_value] # start at the very right of graph, e.g, number         
+        if (peak_height_value > graph_trim_peak_height):
+            # we want to stop triming here
+            prediction_j_trim_value = index_cut_value
+            break;
+            
+    # search predicted values and limit the graph to the smallest value to "beautify" the graph from right
+    actual_j_trim_value = 0
+    for j in range(0, len_y_pred):        
+        index_cut_value = len_y_pred - j - 1
+        
+        peak_height_value = y_test_negative[index_cut_value] * -1 # start at the very right of graph, e.g, number         
+        if (peak_height_value > graph_trim_peak_height):
+            # we want to stop triming here
+            actual_j_trim_value = index_cut_value
+            break;
+            
+    final_right_trim_value = 0
+    if(prediction_j_trim_value > actual_j_trim_value):
+        final_right_trim_value = prediction_j_trim_value        
+    else:
+        final_right_trim_value = actual_j_trim_value
+            
+    trimmed_prediction_array = y_pred[i][:final_right_trim_value]
+    trimmed_actual_array = y_test_negative[:final_right_trim_value]
+    
+    # search predicted values and limit the graph to the smallest value to "beautify" the graph from left
+    for j in range(0, len_y_pred):                
+        peak_height_value = y_pred[i][j] # start at the very right of graph, e.g, number         
+        if (peak_height_value > graph_trim_peak_height):
+            # we want to stop triming here
+            prediction_j_trim_value = j
+            break;
+            
+    # search actual values and limit the graph to the smallest value to "beautify" the graph from left
+    for j in range(0, len_y_pred):                
+        peak_height_value = y_test_negative[j] * -1 # start at the very right of graph, e.g, number         
+        if (peak_height_value > graph_trim_peak_height):
+            # we want to stop triming here
+            actual_j_trim_value = j
+            break;
+            
+    final_left_trim_value = 0
+    if(prediction_j_trim_value > actual_j_trim_value):
+        final_left_trim_value = prediction_j_trim_value        
+    else:
+        final_left_trim_value = actual_j_trim_value
+    
+    trimmed_prediction_array = trimmed_prediction_array[final_left_trim_value:] 
+    trimmed_actual_array = trimmed_actual_array[final_left_trim_value:] 
+    
+    
+    
+    
+    # create basic argumentst needed to be passed intto tthe plt
+    N = len(trimmed_prediction_array)
+    x = range(N)
 
     # plot both prediction and actual values
-    plt.bar(x, y_pred[i], width, color="blue")
-    plt.bar(x, y_test_negative, width, color="red")
+    plt.bar(x, trimmed_prediction_array, chart_bar_width, color="blue")
+    plt.bar(x, trimmed_actual_array, chart_bar_width, color="red")
+    
+    x_offset = len(trimmed_actual_array) / 100
     
     # label the peaks of actual values
-    for j in range(0, len(y_test_negative)):
-        if (y_test_negative[j] <= (peak_label_height*(-1))):
+    for j in range(0, len(trimmed_actual_array)):
+        if (trimmed_actual_array[j] <= (peak_label_height*(-1))):
             # now label 
-            x_value_for_label = j - 4.5
-            y_value_for_label = y_test_negative[j] - graph_label_text_y_offset
+            x_value_for_label = j - x_offset
+            y_value_for_label = trimmed_actual_array[j] - graph_label_text_y_offset - 25
             string_value_for_label = str(j)
             plt.text(x_value_for_label, y_value_for_label, string_value_for_label)
             
     # label the peaks of predictted values
-    for j in range(0, len(y_pred[i])):
-        if (y_pred[i][j] >= (peak_label_height)):
+    for j in range(0, len(trimmed_prediction_array)):
+        if (trimmed_prediction_array[j] >= (peak_label_height)):
             # now label 
-            x_value_for_label = j - 4.5
-            y_value_for_label = y_pred[i][j] + graph_label_text_y_offset
+            x_value_for_label = j - x_offset
+            y_value_for_label = trimmed_prediction_array[j] + graph_label_text_y_offset
             string_value_for_label = str(j)
             plt.text(x_value_for_label, y_value_for_label, string_value_for_label)
+            
+            
+    # add sim value
+    sim_str = "Cosine similarity: " + str('%.3f' % sim_value)
+    plt.annotate(sim_str, xy=(0.75, 0.9), xycoords='axes fraction')
     
     # set different values of graph 
     plt.title('Spectrum Similarity')
@@ -184,6 +272,10 @@ for i in range(0, num_comparison_plots_to_show):
 
 
 # Part 5: export predictions
+
+
+
+
 
 
 
