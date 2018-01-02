@@ -1,25 +1,6 @@
-### currently best:
-### Test accuracy: 0.681318685249
-### using normalizer
-### Test accuracy: 0.703296705262
-### using batch size =20 and  Normalizer()   and  MaxAbsScaler()
-### Test accuracy: 0.747252751183
-### using model.add(Dense(800, kernel_initializer='uniform', activation='relu'))
-### Test accuracy: 0.78021977105
-
-# Functions
-def cos_sim(a, b):
-	"""Takes 2 vectors a, b and returns the cosine similarity according 
-	to the definition of the dot product
-	"""
-	dot_product = np.dot(a, b)
-	norm_a = np.linalg.norm(a)
-	norm_b = np.linalg.norm(b)
-	return dot_product / (norm_a * norm_b)
-
 # SCRIPT PARAMTERES
 epoch_amount = 10 #2000 # the amount of epochs for training
-num_comparison_plots_to_show = 14 # number of spectrum similarity to show
+num_comparison_plots_to_show = 1 # number of spectrum similarity to show
 show_and_save_all_plots = False
 
 # Graph Permaters
@@ -30,17 +11,26 @@ graph_label_text_y_offset = 35 # the amount tot offset the labels on the graph o
 graph_trim_peak_height = 50
 chart_bar_width = 0.4 # width of bar charts
 
-
 import pandas as pd
-
-# required for accuracy reporting reproducibility
-import numpy as np
-np.random.seed(12345)
-
 from keras.models import Sequential 
 from keras.layers import Dense, Dropout
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 import matplotlib.pyplot as plt
+import numpy as np
+import os
+
+if not os.path.exists("msp"):
+    os.makedirs("msp")
+    
+if not os.path.exists("graphs"):
+    os.makedirs("graphs")
+
+# Functions
+def cos_sim(a, b):
+    dot_product = np.dot(a, b)
+    norm_a = np.linalg.norm(a)
+    norm_b = np.linalg.norm(b)
+    return dot_product / (norm_a * norm_b)
 
 # Import data set
 data_filename = 'data.csv'
@@ -53,70 +43,28 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
 # Feature scaling
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import Normalizer
 from sklearn.preprocessing import MaxAbsScaler
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import RobustScaler
-
-# scaler = MinMaxScaler()   # Test accuracy: 0.670329687
-scaler = Normalizer()       # Test accuracy: 0.714285716251
-scaler = MaxAbsScaler()     # Test accuracy: 0.725274729205
-#scaler = StandardScaler()  # Test accuracy: 0.571428572739
-#scaler = RobustScaler()    # Test accuracy: 0.56043956175
-#scaler = Normalizer() and 
-#scaler = MaxAbsScaler()    #Test accuracy: 0.736263740194  
-
+scaler = MaxAbsScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
-
-# Part 2: create ANN and fit data
 def baseline_model():
-    # Intialize the artificial neural network
     model = Sequential()
-
-    # Input layer and hidden layer 
     model.add(Dense(activation="relu", input_dim=1191, units=700, kernel_initializer="glorot_normal"))
-    # Dropout to avoid overfitting
-    model.add(Dropout(0.2))
-    
-    # add another smaller layer
+    model.add(Dropout(0.2))        
     model.add(Dense(800, kernel_initializer='uniform', activation='tanh'))
-    model.add(Dropout(0.2))
-  
-    # Output layer
-    model.add(Dense(activation="relu", input_dim=700, units=400, kernel_initializer="uniform"))
-     
-    # Compile the ANN
+    model.add(Dropout(0.2))  
+    model.add(Dense(activation="relu", input_dim=700, units=400, kernel_initializer="uniform"))     
     model.compile(optimizer="RMSprop", loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
-    
     return model
 
-# Keras callback save best models
-# monitor for ['loss', 'acc', 'mean_squared_error', 'val_loss', 'val_acc', 'val_mean_squared_error']
-checkpoint = ModelCheckpoint(filepath="best-model.hdf5",
-                               monitor='val_acc',
-                               verbose=1,
-                               save_best_only=True)
-                               
-# Follow trends using tensorboard
-# use source activate tensorflow
-# start with tensorboard --logdir=logs
-tensorboard = TensorBoard(log_dir='./logs',
-                          histogram_freq=0,
-                          write_graph=True,
-                          write_images=False)
-
-# enable eraly stopping
+checkpoint = ModelCheckpoint(filepath="best-model.hdf5", monitor='val_acc', verbose=1, save_best_only=True)
+tensorboard = TensorBoard(log_dir='./logs', histogram_freq=0, write_graph=True, write_images=False)
 earlystopping=EarlyStopping(monitor='mean_squared_error', patience=100, verbose=1, mode='auto')
 
-# Fit the ANN to the training set
+# Train the model
 model = baseline_model()
-
-# calculate results, add callbacks ib needed
 result = model.fit(X_train, y_train, batch_size=40, epochs=epoch_amount, validation_data=(X_test, y_test), callbacks=[earlystopping,checkpoint, tensorboard])
-
 
 # summarize history for accuracy
 plt.plot(result.history['acc'])
@@ -136,7 +84,6 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-
 # Print final loss and accuracy 
 score = model.evaluate(X_test, y_test)
 print("")
@@ -144,15 +91,9 @@ print('Test score:', score[0])
 print('Test accuracy:', score[1])
 print("")
 
-
 # Part 4: create prediction graphic
-import matplotlib.pyplot as plt
-
-# predict our y values
-y_pred = model.predict(X_test) 
-
-# collect names of compounds
 mol_names = pd.read_csv("mol_names.csv", sep=',', decimal='.', header=None).values
+y_pred = model.predict(X_test) 
 
 if (show_and_save_all_plots == True):
     num_comparison_plots_to_show = y_test.shape[0]
@@ -170,7 +111,6 @@ for i in range(0, num_comparison_plots_to_show):
     fig_size[0] = graph_width # width
     fig_size[1] = graph_height # height
     plt.rcParams["figure.figsize"] = fig_size
-    
     
     y_1_comp = y_test[i].astype(np.float)
     y_2_comp = y_pred[i]
@@ -235,9 +175,6 @@ for i in range(0, num_comparison_plots_to_show):
     trimmed_prediction_array = trimmed_prediction_array[final_left_trim_value:] 
     trimmed_actual_array = trimmed_actual_array[final_left_trim_value:] 
     
-    
-    
-    
     # create basic argumentst needed to be passed intto tthe plt
     N = len(trimmed_prediction_array)
     x = range(N)
@@ -257,7 +194,7 @@ for i in range(0, num_comparison_plots_to_show):
             string_value_for_label = str(j)
             plt.text(x_value_for_label, y_value_for_label, string_value_for_label)
             
-    # label the peaks of predictted values
+    # label the peaks of predicted values
     for j in range(0, len(trimmed_prediction_array)):
         if (trimmed_prediction_array[j] >= (peak_label_height)):
             # now label 
@@ -266,7 +203,6 @@ for i in range(0, num_comparison_plots_to_show):
             string_value_for_label = str(j)
             plt.text(x_value_for_label, y_value_for_label, string_value_for_label)
             
-            
     # add sim value
     sim_str = "Cosine similarity: " + str('%.3f' % sim_value)
     plt.annotate(sim_str, xy=(0.8, 0.95), xycoords='axes fraction')
@@ -274,7 +210,6 @@ for i in range(0, num_comparison_plots_to_show):
     # add mol names
     plt.annotate("Unknown", xy=(0.02, 0.95), xycoords='axes fraction')
     plt.annotate(mol_names[i][0], xy=(0.02, 0.05), xycoords='axes fraction')
-    
     
     # set different values of graph 
     plt.title('Spectrum Similarity')
@@ -287,10 +222,86 @@ for i in range(0, num_comparison_plots_to_show):
     
     plt.show()
 
+# Part 5: export predictions in MSP
+for i in range(0, y_test.shape[0]):  
 
-# Part 5: export predictions
-
-
+    # open    
+    molecule_name = mol_names[i][0]
+    file_name = "msp/" + molecule_name + ".msp"
+    f = open(file_name, "w+")
+    
+    # name
+    f.write("Name: In-silico spectrum " + str(i+1) + "\n")
+    f.write("Formula:\n")
+    f.write("MW:\n")
+    f.write("CAS#:\n")
+    f.write("Comments: in-silico spectrum\n")
+    
+    # num peaks
+    num_peaks = 0
+    for j in range(0, len(y_pred[i])):  
+        y_value = y_pred[i][j]                
+        if (y_value != 0):
+            num_peaks += 1
+                        
+    f.write("Num peaks: " + str(num_peaks) + "\n")
+    
+    # write peaks             
+    for j in range(0, len(y_pred[i])):  
+        y_value = y_pred[i][j]        
+        x_str = str('%.2f' % j)
+        y_str = str('%.2f' % y_value)          
+        if (y_value != 0):
+            f.write(x_str + " " + y_str + "\n")
+        
+    # close
+    f.close()
+        
+print("Script finished.")    
+    
+"""
+Name: In-silico spectrum 1
+Formula: 
+MW: 
+CAS#: 
+Comments: in-silico spectrum
+Num peaks: 6 
+196.19 52.00
+208.11 74.00
+208.87 2.00
+210.29 5.00
+222.20 13.00
+236.19 999.00
+"""    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
