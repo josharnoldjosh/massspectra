@@ -1,6 +1,6 @@
 # SCRIPT PARAMTERES
-epoch_amount = 10 #2000 # the amount of epochs for training
-num_comparison_plots_to_show = 1 # number of spectrum similarity to show
+epoch_amount = 2000 #2000 # the amount of epochs for training
+num_comparison_plots_to_show = 3 # number of spectrum similarity to show
 show_and_save_all_plots = False
 
 # Graph Permaters
@@ -18,9 +18,6 @@ from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
-if not os.path.exists("msp"):
-    os.makedirs("msp")
     
 if not os.path.exists("graphs"):
     os.makedirs("graphs")
@@ -209,7 +206,7 @@ for i in range(0, num_comparison_plots_to_show):
     
     # add mol names
     plt.annotate("Unknown", xy=(0.02, 0.95), xycoords='axes fraction')
-    plt.annotate(mol_names[i][0], xy=(0.02, 0.05), xycoords='axes fraction')
+    plt.annotate(mol_names[i + y_train.shape[0]][0], xy=(0.02, 0.05), xycoords='axes fraction')
     
     # set different values of graph 
     plt.title('Spectrum Similarity')
@@ -223,39 +220,46 @@ for i in range(0, num_comparison_plots_to_show):
     plt.show()
 
 # Part 5: export predictions in MSP
-for i in range(0, y_test.shape[0]):  
 
-    # open    
-    molecule_name = mol_names[i][0]
-    file_name = "msp/" + molecule_name + ".msp"
-    f = open(file_name, "w+")
+def export_msp(extension, directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     
-    # name
-    f.write("Name: In-silico spectrum " + str(i+1) + "\n")
-    f.write("Formula:\n")
-    f.write("MW:\n")
-    f.write("CAS#:\n")
-    f.write("Comments: in-silico spectrum\n")
-    
-    # num peaks
-    num_peaks = 0
-    for j in range(0, len(y_pred[i])):  
-        y_value = y_pred[i][j]                
-        if (y_value != 0):
-            num_peaks += 1
-                        
-    f.write("Num peaks: " + str(num_peaks) + "\n")
-    
-    # write peaks             
-    for j in range(0, len(y_pred[i])):  
-        y_value = y_pred[i][j]        
-        x_str = str('%.2f' % j)
-        y_str = str('%.2f' % y_value)          
-        if (y_value != 0):
-            f.write(x_str + " " + y_str + "\n")
+    for i in range(0, y_test.shape[0]):  
+        # open    
+        molecule_name = mol_names[y_train.shape[0] + i][0]
+        file_name = directory + "/" + molecule_name + "." + extension
+        f = open(file_name, "w+")
         
-    # close
-    f.close()
+        # name
+        f.write("Name: In-silico spectrum " + str(i+1) + "\n")
+        f.write("Formula:\n")
+        f.write("MW:\n")
+        f.write("CAS#:\n")
+        f.write("Comments: in-silico spectrum\n")
+        
+        # num peaks
+        num_peaks = 0
+        for j in range(0, len(y_pred[i])):  
+            y_value = y_pred[i][j]                
+            if (y_value != 0):
+                num_peaks += 1
+                            
+        f.write("Num peaks: " + str(num_peaks) + "\n")
+        
+        # write peaks             
+        for j in range(0, len(y_pred[i])):  
+            y_value = y_pred[i][j]        
+            x_str = str('%.2f' % j)
+            y_str = str('%.2f' % y_value)          
+            if (y_value != 0):
+                f.write(x_str + " " + y_str + "\n")
+            
+        # close
+        f.close()
+        
+export_msp("msp", "msp")
+export_msp("txt", "msp_txt")
         
 print("Script finished.")    
     
