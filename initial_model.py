@@ -18,8 +18,9 @@ def cos_sim(a, b):
 	return dot_product / (norm_a * norm_b)
 
 # SCRIPT PARAMTERES
-epoch_amount = 2000 # the amount of epochs for training
-num_comparison_plots_to_show = 10 # number of spectrum similarity to show
+epoch_amount = 10 #2000 # the amount of epochs for training
+num_comparison_plots_to_show = 14 # number of spectrum similarity to show
+show_and_save_all_plots = False
 
 # Graph Permaters
 peak_label_height = 100 # the threshold value to display the x value of a peak on the graph 
@@ -150,6 +151,12 @@ import matplotlib.pyplot as plt
 # predict our y values
 y_pred = model.predict(X_test) 
 
+# collect names of compounds
+mol_names = pd.read_csv("mol_names.csv", sep=',', decimal='.', header=None).values
+
+if (show_and_save_all_plots == True):
+    num_comparison_plots_to_show = y_test.shape[0]
+
 for i in range(0, num_comparison_plots_to_show):    
     # print title
     print("Graph ", i, ":")
@@ -262,12 +269,22 @@ for i in range(0, num_comparison_plots_to_show):
             
     # add sim value
     sim_str = "Cosine similarity: " + str('%.3f' % sim_value)
-    plt.annotate(sim_str, xy=(0.75, 0.9), xycoords='axes fraction')
+    plt.annotate(sim_str, xy=(0.8, 0.95), xycoords='axes fraction')
+    
+    # add mol names
+    plt.annotate("Unknown", xy=(0.02, 0.95), xycoords='axes fraction')
+    plt.annotate(mol_names[i][0], xy=(0.02, 0.05), xycoords='axes fraction')
+    
     
     # set different values of graph 
     plt.title('Spectrum Similarity')
     plt.ylabel('intensity %')
     plt.xlabel('m/z')
+    
+    # save figure
+    file_save_name = "graphs/" + mol_names[i][0]
+    plt.savefig(file_save_name)
+    
     plt.show()
 
 
