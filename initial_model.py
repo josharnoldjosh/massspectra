@@ -1,28 +1,36 @@
 # SCRIPT PARAMTERES
 epoch_amount = 2000 #2000 # the amount of epochs for training
-num_comparison_plots_to_show = 3 # number of spectrum similarity to show
+num_models_to_average = 12 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
+
+num_comparison_plots_to_show = 30 # number of spectrum similarity to show
 show_and_save_all_plots = False
 
 # Graph Permaters
-peak_label_height = 100 # the threshold value to display the x value of a peak on the graph 
-graph_width = 12 # height of the graphs displayed
-graph_height = 7 # width of the graphs displayed
-graph_label_text_y_offset = 35 # the amount tot offset the labels on the graph of the peaks
-graph_trim_peak_height = 50
+peak_label_height = 500 # the threshold value to display the x value of a peak on the graph 
+graph_width = 27 # height of the graphs displayed
+graph_height = 8 # width of the graphs displayed
+graph_label_text_y_offset = 20 # the amount tot offset the labels on the graph of the peaks
+graph_trim_peak_height = 10
 chart_bar_width = 0.4 # width of bar charts
+should_trim_graphs = False
 
 import pandas as pd
 from keras.models import Sequential 
 from keras.layers import Dense, Dropout
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
+import keras
 import matplotlib.pyplot as plt
 import numpy as np
-import os
+import os, shutil, time
+from random import randint
     
 if not os.path.exists("graphs"):
     os.makedirs("graphs")
+else:
+    shutil.rmtree('graphs')  
+    time.sleep(.5)
+    os.makedirs("graphs")
 
-# Functions
 def cos_sim(a, b):
     dot_product = np.dot(a, b)
     norm_a = np.linalg.norm(a)
@@ -45,13 +53,28 @@ scaler = MaxAbsScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.fit_transform(X_test)
 
-def baseline_model():
+list_of_weights = []
+
+def baseline_model(): #glorot_normal
     model = Sequential()
-    model.add(Dense(activation="relu", input_dim=1191, units=700, kernel_initializer="glorot_normal"))
-    model.add(Dropout(0.2))        
-    model.add(Dense(800, kernel_initializer='uniform', activation='tanh'))
+    
+    random_upper_bound = 50
+    if (num_models_to_average == 1):
+        random_upper_bound = 0
+    
+    layer_1_weights = 900 + randint(0,random_upper_bound)
+    layer_2_weights = 800 + randint(0,random_upper_bound)
+    layer_3_weights = 900 + randint(0,random_upper_bound)
+    
+    list_of_weights.append(layer_1_weights)
+
+    model.add(Dense(activation="relu", input_dim=1191, units=layer_1_weights, kernel_initializer="glorot_normal"))
+    model.add(Dropout(0.2))   
+     
+    model.add(Dense(layer_2_weights, kernel_initializer="glorot_normal", activation='tanh'))
     model.add(Dropout(0.2))  
-    model.add(Dense(activation="relu", input_dim=700, units=400, kernel_initializer="uniform"))     
+    
+    model.add(Dense(activation="relu", input_dim=layer_3_weights, units=400, kernel_initializer="glorot_normal"))     
     model.compile(optimizer="RMSprop", loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
     return model
 
@@ -60,37 +83,93 @@ tensorboard = TensorBoard(log_dir='./logs', histogram_freq=0, write_graph=True, 
 earlystopping=EarlyStopping(monitor='mean_squared_error', patience=100, verbose=1, mode='auto')
 
 # Train the model
-model = baseline_model()
-result = model.fit(X_train, y_train, batch_size=40, epochs=epoch_amount, validation_data=(X_test, y_test), callbacks=[earlystopping,checkpoint, tensorboard])
+def train_model(num_models_to_average):
+    models = []
+    results = []
+    
+    for i in range(0,num_models_to_average):
+        time.sleep(1)
+        model = baseline_model()
+        result = model.fit(X_train, y_train, batch_size=40, epochs=epoch_amount, validation_data=(X_test, y_test), callbacks=[earlystopping,checkpoint, tensorboard])
+        models.append(model)
+        results.append(result)
+    
+    return (models, results)
 
-# summarize history for accuracy
-plt.plot(result.history['acc'])
-plt.plot(result.history['val_acc'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
+def summarize_results(results):
+    for result in results:
+        # summarize history for accuracy
+        plt.plot(result.history['acc'])
+        plt.plot(result.history['val_acc'])
+        plt.title('model accuracy')
+        plt.ylabel('accuracy')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left')
+        plt.show()
+        
+        # summarize history for loss
+        plt.plot(result.history['loss'])
+        plt.plot(result.history['val_loss'])
+        plt.title('model loss')
+        plt.ylabel('loss')
+        plt.xlabel('epoch')
+        plt.legend(['train', 'test'], loc='upper left')
+        plt.show()
+        
+def print_av_score(models):
+    total_acc = 0
+    total_loss = 0
+    counter = 0
+    for model in models:
+        score = model.evaluate(X_test, y_test)
+        total_acc += score[1]
+        total_loss += score[0]
+        counter += 1
+    av_acc_score = total_acc / counter
+    av_acc_loss = total_loss / counter
+    print("")
+    print('Test score:', av_acc_loss) 
+    print('Average test accuracy:', av_acc_score)
+    print("")
+    
+def print_all_scores(models):
+    counter = 0
+    for model in models:
+        counter += 1
+        score = model.evaluate(X_test, y_test)
+        acc = score[1]
+        loss = score[0]
+        print('Model', counter, ' score:', loss) 
+        print('Model', counter, ' acc:', acc) 
 
-# summarize history for loss
-plt.plot(result.history['loss'])
-plt.plot(result.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
+def return_av_y_pred(models):
+    y_pred_original = models[0].predict(X_test) 
+    y_pred_total = y_pred_original
+    counter = 1
+    for model in models:
+        if (model != models[0]):
+            y_pred = model.predict(X_test) 
+            y_pred_total = y_pred_total + y_pred
+            counter += 1
+    return y_pred_total / counter
+        
+# train model
+models_and_results = train_model(num_models_to_average)
 
-# Print final loss and accuracy 
-score = model.evaluate(X_test, y_test)
-print("")
-print('Test score:', score[0]) 
-print('Test accuracy:', score[1])
-print("")
+models = models_and_results[0]
+results = models_and_results[1]
+
+# print acc and loss graphs
+summarize_results(results)
+
+# print average score and lost
+print_av_score(models)
 
 # Part 4: create prediction graphic
 mol_names = pd.read_csv("mol_names.csv", sep=',', decimal='.', header=None).values
-y_pred = model.predict(X_test) 
+
+# get average y prediction
+y_pred = return_av_y_pred(models)
 
 if (show_and_save_all_plots == True):
     num_comparison_plots_to_show = y_test.shape[0]
@@ -172,6 +251,10 @@ for i in range(0, num_comparison_plots_to_show):
     trimmed_prediction_array = trimmed_prediction_array[final_left_trim_value:] 
     trimmed_actual_array = trimmed_actual_array[final_left_trim_value:] 
     
+    if (should_trim_graphs == False):
+        trimmed_prediction_array = y_pred[i]
+        trimmed_actual_array = y_test_negative
+    
     # create basic argumentst needed to be passed intto tthe plt
     N = len(trimmed_prediction_array)
     x = range(N)
@@ -180,7 +263,7 @@ for i in range(0, num_comparison_plots_to_show):
     plt.bar(x, trimmed_prediction_array, chart_bar_width, color="blue")
     plt.bar(x, trimmed_actual_array, chart_bar_width, color="red")
     
-    x_offset = len(trimmed_actual_array) / 100
+    x_offset = len(trimmed_actual_array) / 150
     
     # label the peaks of actual values
     for j in range(0, len(trimmed_actual_array)):
@@ -214,7 +297,7 @@ for i in range(0, num_comparison_plots_to_show):
     plt.xlabel('m/z')
     
     # save figure
-    file_save_name = "graphs/" + mol_names[i][0]
+    file_save_name = "graphs/" + mol_names[y_train.shape[0]+i][0]
     plt.savefig(file_save_name)
     
     plt.show()
@@ -260,54 +343,10 @@ def export_msp(extension, directory):
         
 export_msp("msp", "msp")
 export_msp("txt", "msp_txt")
+
+# print average score and lost
+print_av_score(models)
+print_all_scores(models)
+print(list_of_weights)
         
-print("Script finished.")    
-    
-"""
-Name: In-silico spectrum 1
-Formula: 
-MW: 
-CAS#: 
-Comments: in-silico spectrum
-Num peaks: 6 
-196.19 52.00
-208.11 74.00
-208.87 2.00
-210.29 5.00
-222.20 13.00
-236.19 999.00
-"""    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
+print("Script finished.")
