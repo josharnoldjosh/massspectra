@@ -118,7 +118,7 @@ def plot_mass_spectra_graph(y_pred_value, y_test_negative, mol_name_number):
     plt.xlabel('m/z')
     
     # save figure
-    file_save_name = "graphs/" + "replace_me"
+    file_save_name = "graphs/" + molecule_name_for_graph
     plt.savefig(file_save_name)
     
     plt.show()
