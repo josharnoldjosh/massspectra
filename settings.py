@@ -7,7 +7,7 @@ Created on Tue Jan  2 22:08:47 2018
 """
 
 # SCRIPT PARAMTERES
-epoch_amount = 10 #2000 # the amount of epochs for training
+epoch_amount = 2000 #2000 # the amount of epochs for training
 
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 

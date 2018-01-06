@@ -9,6 +9,7 @@ Created on Wed Jan  3 15:27:59 2018
 import settings
 from data import postprocessing
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import os, shutil, time
 
@@ -66,7 +67,7 @@ def get_trim_values(y_pred, y_actual):
     
     return trimmed_prediction_array, trimmed_actual_array
 
-def plot_mass_spectra_graph(y_pred_value, y_test_negative):
+def plot_mass_spectra_graph(y_pred_value, y_test_negative, mol_name_number):
     # adjust size of plot
     fig_size = plt.rcParams["figure.figsize"]
     fig_size[0] = settings.graph_width # width
@@ -107,8 +108,9 @@ def plot_mass_spectra_graph(y_pred_value, y_test_negative):
     plt.annotate(sim_str, xy=(0.8, 0.95), xycoords='axes fraction')
     
     # add mol names
+    molecule_name_for_graph = postprocessing.get_molecule_name(mol_name_number)
     plt.annotate("Unknown", xy=(0.02, 0.95), xycoords='axes fraction')
-    plt.annotate("Replace my name", xy=(0.02, 0.05), xycoords='axes fraction')
+    plt.annotate(molecule_name_for_graph, xy=(0.02, 0.05), xycoords='axes fraction')
     
     # set different values of graph 
     plt.title('Spectrum Similarity')
@@ -121,7 +123,7 @@ def plot_mass_spectra_graph(y_pred_value, y_test_negative):
     
     plt.show()
     
-def print_and_save_mass_spectra_graphs(y_pred, y_test):
+def print_and_save_mass_spectra_graphs(y_pred, y_test, y_test_mol_names):
     if not os.path.exists("graphs"):
         os.makedirs("graphs")
     else:
@@ -144,5 +146,6 @@ def print_and_save_mass_spectra_graphs(y_pred, y_test):
             y_test_negative = trimmed_actual_array
             
         # Plot the graph
-        plot_mass_spectra_graph(y_pred_value, y_test_negative)
+        mol_name_number = y_test_mol_names[i]
+        plot_mass_spectra_graph(y_pred_value, y_test_negative, mol_name_number)
         

@@ -17,7 +17,7 @@ class preprocessing:
         # Import data set
         data_filename = 'data.csv'
         data = pd.read_csv(data_filename, sep=',', decimal='.', header=None)
-        y = data.loc[1:, 1:400].values
+        y = data.loc[1:, 0:400].values
         X = data.loc[1:, 401:1591].values
         return X, y
     
@@ -26,11 +26,26 @@ class preprocessing:
         X_train = scaler.fit_transform(X_train)
         X_test = scaler.fit_transform(X_test)
         return X_train, X_test
+    
+    def drop_mol_names_from_y_train_and_test(y_train, y_test):      
+        y_test_mol_names = []
+        
+        y_train_new = []
+        for i in range(0, len(y_train)):
+            y_train_new.append(np.delete(y_train[i], 0).tolist())
+            
+        y_test_new = []
+        for i in range(0, len(y_test)):
+            y_test_mol_names.append(y_test[i][0])
+            y_test_new.append(np.delete(y_test[i], 0).tolist())    
+        
+        return np.asarray(y_train_new), np.asarray(y_test_new), y_test_mol_names
         
     # Split data into test and train sets
     def split_train_and_test_data(X, y):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-        return X_train, X_test, y_train, y_test
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)        
+        y_train, y_test, y_test_mol_names = preprocessing.drop_mol_names_from_y_train_and_test(y_train, y_test)        
+        return X_train, X_test, y_train, y_test, y_test_mol_names
 
 class postprocessing:
     def summarize_results(results):
@@ -101,3 +116,11 @@ class postprocessing:
         norm_a = np.linalg.norm(a)
         norm_b = np.linalg.norm(b)
         return dot_product / (norm_a * norm_b)
+    
+    def get_molecule_name(molecule_name_number):
+        mol_names = pd.read_csv("mol_names.csv", sep=',', decimal='.', header=None).values
+        molecule_name_for_graph = "Replace me"
+        for molecule in mol_names:
+            if (molecule[0] == molecule_name_number):
+                molecule_name_for_graph = molecule[1]
+        return molecule_name_for_graph
