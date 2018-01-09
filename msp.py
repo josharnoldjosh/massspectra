@@ -39,7 +39,7 @@ def export(extension, directory, y_train, y_test, y_pred, y_test_mol_names):
         # write peaks             
         for j in range(0, len(y_pred[i])):  
             y_value = y_pred[i][j]        
-            x_str = str('%.2f' % j)
+            x_str = str('%.2f' % (j+1))
             y_str = str('%.2f' % y_value)          
             if (y_value != 0):
                 f.write(x_str + " " + y_str + "\n")

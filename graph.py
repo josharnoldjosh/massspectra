@@ -9,7 +9,6 @@ Created on Wed Jan  3 15:27:59 2018
 import settings
 from data import postprocessing
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import os, shutil, time
 
@@ -143,7 +142,7 @@ def print_and_save_mass_spectra_graphs(y_pred, y_test, y_test_mol_names):
         if (settings.should_trim_graphs == True):
             trimmed_prediction_array, trimmed_actual_array = get_trim_values(y_pred_value, (y_test_negative * (-1)))
             y_pred_value = trimmed_prediction_array
-            y_test_negative = trimmed_actual_array
+            y_test_negative = trimmed_actual_array * (-1)
             
         # Plot the graph
         mol_name_number = y_test_mol_names[i]

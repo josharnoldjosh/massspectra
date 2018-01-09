@@ -6,8 +6,8 @@ from data import postprocessing
 import msp
 import numpy as np
 
-# Seed numpy
-np.random.seed(12345)
+# Seed numpy to aid in reproducability 
+np.random.seed(7)
 
 # Import data set
 X, y = preprocessing.import_data()
