@@ -14,7 +14,7 @@ from random import randint
 import time
 
 class nn:
-    def __baseline_model():
+    def baseline_model(optimizer='RMSprop', kernal_init='glorot_normal', activation='relu'):
         model = Sequential()
         
         random_upper_bound = 50
@@ -25,14 +25,14 @@ class nn:
         layer_2_weights = 800 + randint(0,random_upper_bound)
         layer_3_weights = 900 + randint(0,random_upper_bound)
     
-        model.add(Dense(activation="relu", input_dim=1191, units=layer_1_weights, kernel_initializer="glorot_normal"))
+        model.add(Dense(activation=activation, input_dim=1191, units=layer_1_weights, kernel_initializer=kernal_init))
         model.add(Dropout(0.2))   
          
-        model.add(Dense(layer_2_weights, kernel_initializer="glorot_normal", activation='tanh'))
+        model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
         model.add(Dropout(0.2))  
         
-        model.add(Dense(activation="relu", input_dim=layer_3_weights, units=400, kernel_initializer="glorot_normal"))     
-        model.compile(optimizer="RMSprop", loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
+        model.add(Dense(activation=activation, input_dim=layer_3_weights, units=400, kernel_initializer=kernal_init))     
+        model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
         return model
     
     # Train the model
