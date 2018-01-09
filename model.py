@@ -37,6 +37,9 @@ class nn:
     
     # Train the model
     def train_model(num_models_to_average, X_train, y_train, X_test, y_test):
+        # start timing the model
+        t0 = time.time() 
+        
         models = []
         results = []
         
@@ -49,6 +52,9 @@ class nn:
             model = nn.__baseline_model()
             result = model.fit(X_train, y_train, batch_size=40, epochs=settings.epoch_amount, validation_data=(X_test, y_test), callbacks=[earlystopping,checkpoint, tensorboard])
             models.append(model)
-            results.append(result)
-        
-        return models, results, postprocessing.return_av_y_pred(models, X_test, y_test)
+            results.append(result)      
+            
+        t1 = time.time()
+        train_time = t1-t0
+            
+        return models, results, postprocessing.return_av_y_pred(models, X_test, y_test), train_time

@@ -19,7 +19,7 @@ X_train, X_test, y_train, y_test, y_test_mol_names = preprocessing.split_train_a
 X_train, X_test = preprocessing.scale_x_data(X_train, X_test)
         
 # train model & get y prediction
-models, model_results, y_pred = nn.train_model(settings.num_models_to_average, X_train, y_train, X_test, y_test)
+models, model_results, y_pred, train_time = nn.train_model(settings.num_models_to_average, X_train, y_train, X_test, y_test)
 
 # print acc and loss graphs (optional)
 postprocessing.summarize_results(model_results)
@@ -36,6 +36,6 @@ graph.save_list_of_sim_values_to_file("sim_value_output", "sim_values", y_pred, 
 
 # print average score and lost
 postprocessing.print_all_scores(models, X_test, y_test)
-postprocessing.print_av_score(models, X_test, y_test)
+postprocessing.print_av_score(models, X_test, y_test, train_time)
         
 print("Script finished.")

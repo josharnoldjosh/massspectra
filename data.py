@@ -68,7 +68,7 @@ class postprocessing:
             plt.legend(['train', 'test'], loc='upper left')
             plt.show()
             
-    def print_av_score(models, X_test, y_test):
+    def print_av_score(models, X_test, y_test, train_time):
         total_acc = 0
         total_loss = 0
         counter = 0
@@ -79,10 +79,14 @@ class postprocessing:
             counter += 1
         av_acc_score = total_acc / counter
         av_acc_loss = total_loss / counter
+        
+        m, s = divmod(train_time, 60)
+        h, m = divmod(m, 60)
         print("")
         print("")
         print('Test score:', av_acc_loss) 
         print('Average test accuracy:', av_acc_score)
+        print("NN total train time: %dh:%02dm:%02ds" % (h, m, s))
         print("")
         print("")
         
