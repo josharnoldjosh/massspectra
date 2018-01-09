@@ -148,3 +148,62 @@ def print_and_save_mass_spectra_graphs(y_pred, y_test, y_test_mol_names):
         mol_name_number = y_test_mol_names[i]
         plot_mass_spectra_graph(y_pred_value, y_test_negative, mol_name_number)
         
+def save_list_of_sim_values_to_file(directory, file_name, y_pred, y_test, y_test_mol_names):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    else:
+        shutil.rmtree(directory)  
+        time.sleep(.5)
+        os.makedirs(directory) 
+    
+    file_to_open = directory + "/" + file_name + ".txt"
+    f = open(file_to_open, "w+")  
+    
+    for i in range(0, len(y_pred)):         
+        molecule_name = postprocessing.get_molecule_name(y_test_mol_names[i])
+        
+        # Check this is calculated right:
+        sim_value = postprocessing.cos_sim((y_test[i].astype(np.float)), y_pred[i])                
+        sim_value_string = str('%.3f' % (sim_value*1000))
+        
+        string_to_write = str(i+1) + " " + sim_value_string + " " + molecule_name + "\n"
+        f.write(string_to_write)
+        
+    f.close()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

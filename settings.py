@@ -7,13 +7,13 @@ Created on Tue Jan  2 22:08:47 2018
 """
 
 # SCRIPT PARAMTERES
-epoch_amount = 2000 # the amount of epochs for training
+epoch_amount = 50 # the amount of epochs for training
 
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 
 num_comparison_plots_to_show = 1 # number of spectrum similarity to show (don't make this over the max value otherwise it will crash)
 
-show_and_save_all_plots = True # This overrides the number of comparison plots to show and plots the max number of plots
+show_and_save_all_plots = False # This overrides the number of comparison plots to show and plots the max number of plots
 
 
 

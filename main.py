@@ -31,6 +31,9 @@ graph.print_and_save_mass_spectra_graphs(y_pred, y_test, y_test_mol_names)
 msp.export("msp", "msp", y_train, y_test, y_pred, y_test_mol_names)
 msp.export("txt", "msp_txt", y_train, y_test, y_pred, y_test_mol_names) 
 
+# Export a list of similarity values
+graph.save_list_of_sim_values_to_file("sim_value_output", "sim_values", y_pred, y_test, y_test_mol_names)
+
 # print average score and lost
 postprocessing.print_all_scores(models, X_test, y_test)
 postprocessing.print_av_score(models, X_test, y_test)
