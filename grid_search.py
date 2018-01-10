@@ -6,6 +6,10 @@ Created on Tue Jan  9 14:49:23 2018
 @author: josharnold
 """
 
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
+
 from data import preprocessing
 from model import nn
 import numpy as np
@@ -28,9 +32,9 @@ X_train, X_test = preprocessing.scale_x_data(X_train, X_test)
 # Prepare parameters to grid search
 optimizers = ['SGD','RMSprop','Adagrad','Adadelta','Adam','Adamax','Nadam']
 activations = ['softmax','softplus','softsign','relu','tanh','sigmoid','hard_sigmoid','linear']
-kernal_init = ['uniform','lecun_uniform','normal','identity','orthogonal','zero','one','glorot_normal','glorot_uniform', 'he_normal', 'he_uniform']
-epochs = [50, 100, 200, 300, 400]
-batches = [5, 15, 25, 40]
+kernal_init = ['uniform','lecun_uniform','normal','orthogonal','zero','one','glorot_normal','glorot_uniform', 'he_normal', 'he_uniform']
+epochs = [50]
+batches = [20]
 param_grid = dict(optimizer=optimizers, nb_epoch=epochs, batch_size=batches, kernal_init=kernal_init, activation=activations)
 
 # Create model
