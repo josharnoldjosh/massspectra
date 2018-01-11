@@ -30,6 +30,7 @@ def get_right_trim_value(y_value_array):
 
 def get_left_trim_value(y_value_array):
     len_y_value = len(y_value_array)
+    prediction_j_trim_value = 0
     for j in range(0, len_y_value):                
         peak_height_value = y_value_array[j] # start at the very right of graph, e.g, number         
         if (peak_height_value > settings.graph_trim_peak_height):
