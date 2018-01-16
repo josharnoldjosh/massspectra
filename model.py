@@ -14,7 +14,7 @@ from random import randint
 import time
 
 class nn:
-    def baseline_model(optimizer='RMSprop', kernal_init='glorot_normal', activation='relu', l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
+    def baseline_model(optimizer='RMSprop', kernal_init='glorot_normal', activation='relu', input_dim_val=1191, l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
         model = Sequential()
         
         random_upper_bound = 50
@@ -25,7 +25,7 @@ class nn:
         layer_2_weights = l2_w + randint(0,random_upper_bound)
         layer_3_weights = l3_w + randint(0,random_upper_bound)
     
-        model.add(Dense(activation=activation, input_dim=1191, units=layer_1_weights, kernel_initializer=kernal_init))
+        model.add(Dense(activation=activation, input_dim=input_dim_val, units=layer_1_weights, kernel_initializer=kernal_init))
         model.add(Dropout(l1_d))   
          
         model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
@@ -49,8 +49,11 @@ class nn:
         
         for i in range(0,num_models_to_average):
             time.sleep(1)
-            model = nn.baseline_model()
-            result = model.fit(X_train, y_train, batch_size=40, epochs=settings.epoch_amount, validation_data=(X_test, y_test), callbacks=[earlystopping,checkpoint, tensorboard])
+            model = nn.baseline_model(input_dim_val=X_train.shape[1])
+            result = model.fit(X_train, y_train, 
+                               batch_size=40, epochs=settings.epoch_amount, 
+                               validation_data=(X_test, y_test), 
+                               callbacks=[earlystopping,checkpoint, tensorboard])
             models.append(model)
             results.append(result)      
             

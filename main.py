@@ -1,5 +1,6 @@
 import settings
 from data import preprocessing
+from feature_selection import selector
 from model import nn
 import graph
 from data import postprocessing
@@ -11,6 +12,9 @@ np.random.seed(7)
 
 # Import data set
 X, y = preprocessing.import_data()
+
+# Feature selection
+X = selector.remove_low_variance(X)
 
 # Split test train data
 X_train, X_test, y_train, y_test, y_test_mol_names = preprocessing.split_train_and_test_data(X, y)
