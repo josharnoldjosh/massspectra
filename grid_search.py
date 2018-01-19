@@ -6,6 +6,7 @@ Created on Tue Jan  9 14:49:23 2018
 @author: josharnold
 """
 from grid_search_helper import helper
+from grid_search_params import grids
 from model import nn
 import time
 
@@ -13,27 +14,29 @@ import time
 X_train, X_test, y_train, y_test, y_test_mol_names = helper.get_data()
 
 # Prepare parameters to grid search
-optimizers = ['SGD','RMSprop','Adagrad','Adadelta','Adam','Adamax','Nadam']
-activations = ['softmax','softplus','softsign','relu','tanh','sigmoid','hard_sigmoid','linear']
-kernal_init = ['uniform','lecun_uniform','normal','orthogonal','zero','one','glorot_normal','glorot_uniform', 'he_normal', 'he_uniform']
-l1_w = [900]
-l2_w = [800]
-l3_w = [900]
-d1_w = [0.2]
-d2_w = [0.2]
-epochs = [10]
-batches = [20]
+optimizers, activations, kernal_init = grids.default_opt_act_kern()
+l1_w, l2_w, l3_w = grids.default_layer_weights()
+d1_w, d2_w = grids.default_dropout()
+epochs, batches = grids.default_batch_epochs()
+
+# Override 
+epochs = [50]
+should_purge_checkpoints_and_restart_grid_search = True
 
 # Params for keeping track of grid searching
 models = []
+results = []
+
 params = []
 model_accs = []
+result_losses = []
+
 checkpoint_num = 0
 checkpoint_load = 0
 current_checkpoint_time = 0
 
 # Setup / load directories for the grid search
-checkpoint_load, model_accs, params, current_checkpoint_time = helper.manage_dirs(purge=False)
+checkpoint_load, model_accs, result_losses, params, current_checkpoint_time = helper.manage_dirs(purge=should_purge_checkpoints_and_restart_grid_search)
 
 # Keep track of time
 t0 = time.time()
@@ -70,9 +73,15 @@ for d1 in d1_w:
                                                 
                                                 # Add to array
                                                 models.append(model)  
+                                                results.append(result)
                                                 group = (epoch, batch, opt, act, kern_init, w_1, w_2, w_3, d1, d2)
                                                 params.append(group)
                                                 
-                                                current_checkpoint_time = helper.find_best_and_save_results(models, params, model_accs, checkpoint_num, t0, X_test, y_test, current_checkpoint_time)
+                                                current_checkpoint_time = helper.find_best_and_save_results(models, 
+                                                                                                            params, 
+                                                                                                            model_accs, result_losses, 
+                                                                                                            checkpoint_num, t0, 
+                                                                                                            X_test, y_test, 
+                                                                                                            current_checkpoint_time)
                                             
 print("Script finished")                                            
