@@ -14,7 +14,7 @@ from random import randint
 import time
 
 class nn:
-    def baseline_model(optimizer='RMSprop', kernal_init='glorot_normal', activation='relu', input_dim_val=1191, l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
+    def baseline_model(optimizer='Nadam', kernal_init='glorot_uniform', activation='relu', input_dim_val=1191, l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
         model = Sequential()
         
         random_upper_bound = 50

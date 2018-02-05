@@ -1,87 +1,49 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue Jan  9 14:49:23 2018
+Created on Sun Feb  4 10:44:27 2018
 
 @author: josharnold
 """
-from grid_search_helper import helper
-from grid_search_params import grids
-from model import nn
-import time
 
-# Get data
-X_train, X_test, y_train, y_test, y_test_mol_names = helper.get_data()
+from grid_search_data import helper, grid_data, checkpoint
+from grid_search_manager import timer
 
-# Prepare parameters to grid search
-optimizers, activations, kernal_init = grids.default_opt_act_kern()
-l1_w, l2_w, l3_w = grids.default_layer_weights()
-d1_w, d2_w = grids.default_dropout()
-epochs, batches = grids.default_batch_epochs()
+# Optional destroy directory for fresh grid search
+helper.purge_directory()
 
-# Override 
-epochs = [50]
-should_purge_checkpoints_and_restart_grid_search = True
+# Load data
+X_train, X_test, y_train, y_test, y_test_mol_names = helper.load_data()
 
-# Params for keeping track of grid searching
-models = []
-results = []
+# Load grid search params
+search_data = grid_data.load_default_params()
 
-params = []
-model_accs = []
-result_losses = []
+# Override epochs 
+search_data.epochs = [5]
 
-checkpoint_num = 0
-checkpoint_load = 0
-current_checkpoint_time = 0
+# Load checkpoint 
+current_checkpoint = checkpoint.current()
 
-# Setup / load directories for the grid search
-checkpoint_load, model_accs, result_losses, params, current_checkpoint_time = helper.manage_dirs(purge=should_purge_checkpoints_and_restart_grid_search)
+while True:
+    # Get data at checkpoint
+    search_data = grid_data.get_data_at_checkpoint(current_checkpoint, search_data)  
 
-# Keep track of time
-t0 = time.time()
-        
-# Start brutal grid search
-for d1 in d1_w:
-    for d2 in d2_w:
-        for batch in batches:
-            for w_1 in l1_w:
-                for w_2 in l2_w:
-                    for w_3 in l3_w:
-                        for opt in optimizers:
-                            for act in activations:
-                                for kern_init in kernal_init:
-                                    for epoch in epochs:                                                                                                               
-                                            checkpoint_num += 1
-                                            
-                                            if (checkpoint_load >= checkpoint_num):
-                                                print("skiping ", checkpoint_num)
-                                            else:                                                    
-                                                time.sleep(0.5)  
-                                                                                                                                                                                                                                        
-                                                # Create model with specific params
-                                                model = nn.baseline_model(optimizer=opt, 
-                                                                          kernal_init=kern_init, 
-                                                                          activation=act, 
-                                                                          l1_w=w_1, l2_w=w_2, l3_w=w_3, 
-                                                                          l1_d=d1, l2_d=d2)                                           
-                                                
-                                                # Fit model
-                                                result = model.fit(X_train, y_train, 
-                                                                   batch_size=batch, epochs=epoch, 
-                                                                   validation_data=(X_test, y_test))                                                                                    
-                                                
-                                                # Add to array
-                                                models.append(model)  
-                                                results.append(result)
-                                                group = (epoch, batch, opt, act, kern_init, w_1, w_2, w_3, d1, d2)
-                                                params.append(group)
-                                                
-                                                current_checkpoint_time = helper.find_best_and_save_results(models, 
-                                                                                                            params, 
-                                                                                                            model_accs, result_losses, 
-                                                                                                            checkpoint_num, t0, 
-                                                                                                            X_test, y_test, 
-                                                                                                            current_checkpoint_time)
-                                            
-print("Script finished")                                            
+    # Start timer 
+    timer.start()      
+    
+    # Run neural network
+    model = helper.create_neural_network(search_data)
+    model.fit(X_train, y_train, batch_size=search_data.batch_size, epochs=search_data.epoch, validation_data=(X_test, y_test)) 
+   
+    # Save output 
+    result = helper.extract_results(model, X_test, y_test, search_data)
+    helper.save_output(result)
+    
+    # Update checkpoint
+    current_checkpoint += 1
+    checkpoint.save(current_checkpoint)
+    
+    # End grid search once grids are exhausted
+    if current_checkpoint == grid_data.max_number_of_checkpoints(search_data):
+        print("Script finished after", current_checkpoint, "checkpoints.") 
+        break    

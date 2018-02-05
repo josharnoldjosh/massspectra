@@ -14,7 +14,7 @@ np.random.seed(7)
 X, y = preprocessing.import_data()
 
 # Feature selection
-X = selector.remove_low_variance(X)
+#X = selector.remove_low_variance(X) # this gives lower acc :(
 
 # Split test train data
 X_train, X_test, y_train, y_test, y_test_mol_names = preprocessing.split_train_and_test_data(X, y)
