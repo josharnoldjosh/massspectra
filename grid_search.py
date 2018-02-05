@@ -10,16 +10,13 @@ from grid_search_data import helper, grid_data, checkpoint
 from grid_search_manager import timer
 
 # Optional destroy directory for fresh grid search
-helper.purge_directory()
+#helper.purge_directory()
 
 # Load data
 X_train, X_test, y_train, y_test, y_test_mol_names = helper.load_data()
 
 # Load grid search params
 search_data = grid_data.load_default_params()
-
-# Override epochs 
-search_data.epochs = [5]
 
 # Load checkpoint 
 current_checkpoint = checkpoint.current()

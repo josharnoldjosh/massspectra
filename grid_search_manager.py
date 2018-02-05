@@ -12,10 +12,12 @@ class file:
     directory = "grid_search_output/"
     
     def destroy_output_directory():
-        shutil.rmtree(file.directory)  
-        time.sleep(.5)
-        os.makedirs(file.directory) 
-        os.makedirs((file.directory+"logs")) 
+        if os.path.exists(file.directory):
+            shutil.rmtree(file.directory)  
+            time.sleep(.5)
+            os.makedirs(file.directory) 
+            os.makedirs((file.directory+"logs")) 
+        return
     
     def create_output_directory():
         if not os.path.exists(file.directory):
@@ -79,7 +81,11 @@ class writer:
         
         # Loss
         f.write("Loss: " + str(result.loss))
-        f.write("\n\n")        
+        f.write("\n\n")    
+        
+        # Sim
+        f.write("Average cosine similarity: " + str(result.average_sim))
+        f.write("\n\n")    
         
         f.close()
         return
@@ -94,19 +100,27 @@ class writer:
         f = open(directory, "w+")  
         
         # Accuracy
-        f.write("Accuracy: " + str(best_result.accuracy))
+        f.write("Best ccuracy: " + str(best_result.accuracy))
         f.write("\n\n")
         
         # Loss
-        f.write("Loss: " + str(best_result.loss))
-        f.write("\n\n")   
+        f.write("Best loss: " + str(best_result.loss))
+        f.write("\n\n") 
+        
+        # Sim
+        f.write("Best average cosine similarity: " + str(best_result.average_sim))
+        f.write("\n\n")    
         
         # Best params
         f.write("1) Accuracy at checkpoint " + str(best_result.best_param_checkpoints[0]))
         f.write("\n")
         
         f.write("2) Loss at checkpoint " + str(best_result.best_param_checkpoints[1]))
-        f.write("\n")         
+        f.write("\n")  
+        
+        f.write("3) Average cosine similarity at checkpoint " + str(best_result.best_param_checkpoints[2]))
+        f.write("\n")  
+        
         f.write("\n") 
         
         for p in best_result.best_params:

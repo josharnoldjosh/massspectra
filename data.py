@@ -128,3 +128,11 @@ class postprocessing:
             if (molecule[0] == molecule_name_number):
                 molecule_name_for_graph = molecule[1]
         return molecule_name_for_graph
+    
+    def get_average_cosine_similarity(y_pred, y_test):
+        total_sim_value = 0
+        for i in range(0, len(y_pred)):              
+            sim_value = postprocessing.cos_sim((y_test[i].astype(np.float)), y_pred[i]) 
+            total_sim_value += sim_value
+        average = total_sim_value / len(y_pred)        
+        return average

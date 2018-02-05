@@ -6,11 +6,11 @@ Created on Sun Feb  4 10:46:29 2018
 @author: josharnold
 """
 
-from data import preprocessing
+from data import preprocessing, postprocessing
 from grid_search_manager import file, writer
 from model import nn
 
-class helper():    
+class helper():        
     def load_data():      
         # Create output directory 
         file.create_output_directory()        
@@ -18,7 +18,7 @@ class helper():
         # Load data
         X, y = preprocessing.import_data()        
         X_train, X_test, y_train, y_test, y_test_mol_names = preprocessing.split_train_and_test_data(X, y)        
-        X_train, X_test = preprocessing.scale_x_data(X_train, X_test)        
+        X_train, X_test = preprocessing.scale_x_data(X_train, X_test)                 
         return X_train, X_test, y_train, y_test, y_test_mol_names
     
     def purge_directory():
@@ -34,14 +34,20 @@ class helper():
         return model
     
     def extract_results(nerual_network, X_test, y_test, search_data):
+        # Accuracy & Loss
         score = nerual_network.evaluate(X_test, y_test)        
         loss = score[0]
         accuracy = score[1]
-               
+        
+        # Average cosine similarity 
+        y_pred = nerual_network.predict(X_test)
+        average = postprocessing.get_average_cosine_similarity(y_pred, y_test)
+        
         # Create the result
         res = result()        
         res.accuracy = accuracy # Accuracy
         res.loss = loss # Loss
+        res.average_sim = average
         res.params = search_data # Parameters
         res.checkpoint = checkpoint.current() # Checkpoint
         return res
@@ -67,8 +73,9 @@ class helper():
         
         best_accuracy = 0        
         best_loss = 999999999
-        best_params = [0, 0]
-        checkpoints = [0, 0]
+        best_av_sim = 0
+        best_params = [0, 0, 0]
+        checkpoints = [0, 0, 0]        
         
         for res in results:
             if (res.accuracy >= best_accuracy):
@@ -81,9 +88,15 @@ class helper():
                 best_params[1] = res.params
                 checkpoints[1] = res.checkpoint
                 
+            if (res.average_sim >= best_av_sim):
+                best_av_sim = res.average_sim    
+                best_params[2] = res.params
+                checkpoints[2] = res.checkpoint
+                
         best_result = result()
         best_result.accuracy = best_accuracy
         best_result.loss = best_loss
+        best_result.average_sim = best_av_sim
         best_result.best_params = best_params
         best_result.best_param_checkpoints = checkpoints
         
@@ -119,8 +132,8 @@ class grid_data:
         data.layer_weights = [[900, 800, 900]]
         data.dropout_weights = [[0.2, 0.2]]
         
-        data.batch_sizes = [20, 10]        
-        data.epochs = [5, 10, 20, 40]
+        data.batch_sizes = [20]        
+        data.epochs = [10]
         
         return data
     
@@ -173,4 +186,5 @@ class result:
     checkpoint = 0
     best_params = None
     best_param_checkpoints = []
+    average_sim = 0
     
