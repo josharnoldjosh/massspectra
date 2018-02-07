@@ -1,0 +1,19 @@
+Best accuracy: 0.692307700823
+
+Best loss: 1276.88991807
+
+Best average cosine similarity: 0.925711563595
+
+1) Accuracy at checkpoint 253
+2) Loss at checkpoint 396
+3) Average cosine similarity at checkpoint 391
+
+Optimizer, activation, kernal init: Adadelta, softplus, orthogonal
+Layer weights, dropout, batch size, epoch: [900, 800, 900], [0.2, 0.2], 20, 10
+
+Optimizer, activation, kernal init: Adam, linear, glorot_normal
+Layer weights, dropout, batch size, epoch: [900, 800, 900], [0.2, 0.2], 20, 10
+
+Optimizer, activation, kernal init: Adam, linear, lecun_uniform
+Layer weights, dropout, batch size, epoch: [900, 800, 900], [0.2, 0.2], 20, 10
+

@@ -100,7 +100,7 @@ class writer:
         f = open(directory, "w+")  
         
         # Accuracy
-        f.write("Best ccuracy: " + str(best_result.accuracy))
+        f.write("Best accuracy: " + str(best_result.accuracy))
         f.write("\n\n")
         
         # Loss

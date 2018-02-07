@@ -1,0 +1,453 @@
+mol1,Squalane
+mol2,Dodecane
+mol3,"Pentadecane, 2,6,10,14-tetramethyl-"
+mol4,Octane
+mol5,Stigmastane
+mol6,"Heptadecane, 9-(2-cyclohexylethyl)-"
+mol7,Undecane
+mol8,Nonane
+mol9,"Cyclopentane, decyl-"
+mol10,"Cyclohexane, (2-decyldodecyl)-"
+mol11,"Cyclopentane, (2-decyldodecyl)-"
+mol12,"Cyclopentane, undecyl-"
+mol13,"Cyclopentane, (4-octyldodecyl)-"
+mol14,"Cyclotetradecane, 1,7,11-trimethyl-4-(1-methylethyl)-"
+mol15,D:A-Friedooleanane
+mol16,Hexadecane
+mol17,Decane
+mol18,Eicosane
+mol19,"Octane, 2,7-dimethyl-"
+mol20,"Heneicosane, 11-cyclopentyl-"
+mol21,"Cyclopentane, heneicosyl-"
+mol22,"Eicosane, 2-cyclohexyl-"
+mol23,"Cyclohexane, (1-propylheptadecyl)-"
+mol24,"Cyclopentane, 1-(2-decyldodecyl)-2,4-dimethyl-"
+mol25,"Heneicosane, 11-pentyl-"
+mol26,"Cyclohexane, (1-hexyltetradecyl)-"
+mol27,"Heneicosane, 11-decyl-"
+mol28,"Cyclohexane, (1-decylundecyl)-"
+mol29,"Cyclohexane, (1-butylhexadecyl)-"
+mol30,"Docosane, 11-butyl-"
+mol31,"Dodecane, 2,6,10-trimethyl-"
+mol32,"Dodecane, 1-cyclopentyl-4-(3-cyclopentylpropyl)-"
+mol33,"Eicosane, 9-cyclohexyl-"
+mol34,"Tridecane, 7-cyclohexyl-"
+mol35,"Heneicosane, 11-(1-ethylpropyl)-"
+mol36,"Hexadecane, 2,6,10,14-tetramethyl-"
+mol37,"Dodecane, 2-cyclohexyl-"
+mol38,"Tridecane, 6-cyclohexyl-"
+mol39,Tridecane
+mol40,Pentadecane
+mol41,Heptadecane
+mol42,Docosane
+mol43,Octadecane
+mol44,"Pentane, 2,3,3-trimethyl-"
+mol45,Dotriacontane
+mol46,Heneicosane
+mol47,"Pentane, 3-ethyl-2-methyl-"
+mol48,"Decane, 2-methyl-"
+mol49,"Octane, 4-methyl-"
+mol50,"Octane, 2-methyl-"
+mol51,"Hexadecane, 6,11-dipentyl-"
+mol52,"Nonane, 5-butyl-"
+mol53,"Heneicosane, 11-(2,2-dimethylpropyl)-"
+mol54,"Cyclohexane, 1,3-didecyl-"
+mol55,"Cyclohexane, 1,1'-tetradecylidenebis-"
+mol56,"Cyclohexane, 1,1'-(2-tridecyl-1,3-propanediyl)bis-"
+mol57,"Naphthalene, 1-(1-decylundecyl)decahydro-"
+mol58,"Cyclohexane, (1-octylnonyl)-"
+mol59,"Hexadecane, 5-butyl-"
+mol60,"Hexacosane, 9-octyl-"
+mol61,"Hexacosane, 13-dodecyl-"
+mol62,"Heptadecane, 4-propyl-"
+mol63,"Heptadecane, 9-hexyl-"
+mol64,"Benzene, (2-decyldodecyl)-"
+mol65,"Docosane, 7-butyl-"
+mol66,"Docosane, 7-hexyl-"
+mol67,"Docosane, 9-butyl-"
+mol68,"Tridecane, 7-propyl-"
+mol69,"Docosane, 9-octyl-"
+mol70,"Dodecane, 4,9-dipropyl-"
+mol71,"Tridecane, 2-methyl-"
+mol72,"Triacontane, 11,20-didecyl-"
+mol73,"Tetratriacontane, 17-hexadecyl-"
+mol74,"Docosane, 5-butyl-"
+mol75,"Eicosane, 10-heptyl-10-octyl-"
+mol76,"Tetracosane, 9-octyl-"
+mol77,"Tetracosane, 11-decyl-"
+mol78,"Eicosane, 3-cyclohexyl-"
+mol79,"Eicosane, 3-methyl-"
+mol80,"Pentadecane, 8-hexyl-"
+mol81,"Pentacosane, 13-undecyl-"
+mol82,"Cyclopentane, 1,1'-hexadecylidenebis-"
+mol83,"Cyclopentane, (2-hexyloctyl)-"
+mol84,"Octadecane, 9-ethyl-9-heptyl-"
+mol85,"Decane, 3-methyl-"
+mol86,"Octadecane, 3-ethyl-5-(2-ethylbutyl)-"
+mol87,"Eicosane, 9-octyl-"
+mol88,"Cyclohexane, 2-(1-decylundecyl)-1,4-dimethyl-"
+mol89,"Cyclohexane, 1-(1-tetradecylpentadecyl)-"
+mol90,"Docosane, 11-decyl-"
+mol91,"Decane, 5,6-bis(2,2-dimethylpropylidene)-, (E,Z)-"
+mol92,"Cyclohexane, (1-hexadecylheptadecyl)-"
+mol93,"Eicosane, 10-methyl-"
+mol94,"Eicosane, 7-hexyl-"
+mol95,"Cyclohexane, 1,4-didecyl-"
+mol96,"Nonadecane, 9-methyl-"
+mol97,"Undecane, 5-methyl-"
+mol98,"Undecane, 5-ethyl-5-propyl-"
+mol99,"Undecane, 3-methyl-"
+mol100,"Hexadecane, 2,6,11,15-tetramethyl-"
+mol101,"Cyclohexane, 1,1-dimethyl-2-propyl-"
+mol102,"Nonane, 4,5-dimethyl-"
+mol103,3-Methyltriacontane
+mol104,3-Methylpentatriacontane
+mol105,3-Methylpentacosane
+mol106,3-Methyloctacosane
+mol107,3-Methylhexacosane
+mol108,3-Methylheptacosane
+mol109,3-Methyldotriacontane
+mol110,"Tridecane, 3-methyl-"
+mol111,"Octadecane, 4-methyl-"
+mol112,"Dodecane, 2-methyl-"
+mol113,"Dodecane, 3-cyclohexyl-"
+mol114,"Tridecane, 3-cyclohexyl-"
+mol115,2-Methylhexacosane
+mol116,"Pentadecane, 2,6,10-trimethyl-"
+mol117,"Dodecane, 4-cyclohexyl-"
+mol118,"Dodecane, 5-cyclohexyl-"
+mol119,"Dodecane, 6-cyclohexyl-"
+mol120,"Eicosane, 2-methyl-"
+mol121,"Undecane, 6-cyclohexyl-"
+mol122,"Decane, 5-cyclohexyl-"
+mol123,"Decane, 4-cyclohexyl-"
+mol124,"Decane, 3-cyclohexyl-"
+mol125,"Undecane, 5-cyclohexyl-"
+mol126,"Undecane, 4-cyclohexyl-"
+mol127,"Heptadecane, 3-methyl-"
+mol128,"Undecane, 3-cyclohexyl-"
+mol129,"Undecane, 2-cyclohexyl-"
+mol130,Hentriacontane
+mol131,"Heneicosane, 5-methyl-"
+mol132,"Tridecane, 5-cyclohexyl-"
+mol133,"Decane, 2-cyclohexyl-"
+mol134,"Tridecane, 4-cyclohexyl-"
+mol135,11-Methylpentacosane
+mol136,13-Methylnonacosane
+mol137,11-Methyltricosane
+mol138,"Heneicosane, 3-methyl-"
+mol139,Tetradecane
+mol140,Octacosane
+mol141,Hexacosane
+mol142,Pentacosane
+mol143,Tricosane
+mol144,Nonadecane
+mol145,Tetracosane
+mol146,Triacontane
+mol147,"Hexane, 3-ethyl-"
+mol148,"Nonane, 2-methyl-"
+mol149,Hexatriacontane
+mol150,Tetratetracontane
+mol151,"Hexane, 3,3-dimethyl-"
+mol152,Tetratriacontane
+mol153,"Octane, 4-ethyl-"
+mol154,Heptacosane
+mol155,"Hexane, 2,3,5-trimethyl-"
+mol156,"Hexane, 2,4-dimethyl-"
+mol157,Nonacosane
+mol158,"Heptane, 2,4-dimethyl-"
+mol159,"Heptane, 3,4-dimethyl-"
+mol160,"Heptane, 4,4-dimethyl-"
+mol161,"Heptadecane, 2-methyl-"
+mol162,"Undecane, 2-methyl-"
+mol163,"Hexane, 2,3,4-trimethyl-"
+mol164,3-Ethyl-3-methylheptane
+mol165,"Octane, 3,5-dimethyl-"
+mol166,"Pentadecane, 2-methyl-"
+mol167,Tetracontane
+mol168,"Heptane, 2,6-dimethyl-"
+mol169,"Tetracosane, 3-ethyl-"
+mol170,"Heptane, 2,4,6-trimethyl-"
+mol171,"Heptane, 2,3-dimethyl-"
+mol172,"Heptane, 2,2,3,3,5,6,6-heptamethyl-"
+mol173,"Heptadecane, 9-octyl-"
+mol174,"Heptane, 3,4,5-trimethyl-"
+mol175,"Tricosane, 2-methyl-"
+mol176,Pentatriacontane
+mol177,"Tridecane, 7-hexyl-"
+mol178,"Hexane, 2,2,3,3-tetramethyl-"
+mol179,"Octane, 2,2-dimethyl-"
+mol180,"Dodecane, 2,6,11-trimethyl-"
+mol181,"4,4-Dimethyl octane"
+mol182,"1,1'-Bicyclopentyl, 2-hexadecyl-"
+mol183,"Undecane, 2,4-dimethyl-"
+mol184,"Dodecane, 4-methyl-"
+mol185,"Dodecane, 5,8-diethyl-"
+mol186,Tritriacontane
+mol187,"Eicosane, 10-butyl-10-propyl-"
+mol188,"Eicosane, 10-hexyl-10-methyl-"
+mol189,"Tridecane, 4,8-dimethyl-"
+mol190,"Tridecane, 3-ethyl-"
+mol191,"Tetradecane, 6,9-dimethyl-"
+mol192,"Tetradecane, 5-methyl-"
+mol193,"Tetradecane, 4,11-dimethyl-"
+mol194,"Tetracosane, 5-ethyl-5-methyl-"
+mol195,"Tetracosane, 12-decyl-12-nonyl-"
+mol196,"Pentane, 3-ethyl-2,3-dimethyl-"
+mol197,"Pentane, 2,2,3,4-tetramethyl-"
+mol198,"Pentadecane, 8,8-diheptyl-"
+mol199,"Pentadecane, 6-methyl-"
+mol200,"Heptadecane, 8,8-dipentyl-"
+mol201,"Heptadecane, 8-methyl-"
+mol202,"Octane, 3,4-dimethyl-"
+mol203,"Octadecane, 2-methyl-"
+mol204,"Hexadecane, 2-methyl-"
+mol205,"Hexadecane, 7-methyl-"
+mol206,"Hexadecane, 8-hexyl-8-pentyl-"
+mol207,"Nonadecane, 2-methyl-"
+mol208,"Undecane, 4-methyl-"
+mol209,"Docosane, 10-ethyl-10-propyl-"
+mol210,"Decane, 5-ethyl-5-methyl-"
+mol211,"Octane, 2,3,3-trimethyl-"
+mol212,"Octane, 2,3,6,7-tetramethyl-"
+mol213,"Octane, 2,4,6-trimethyl-"
+mol214,"Octane, 2,6,6-trimethyl-"
+mol215,"Octane, 3,4,5,6-tetramethyl-"
+mol216,"Octane, 3-ethyl-2,7-dimethyl-"
+mol217,"Octane, 4,5-diethyl-"
+mol218,"Octane, 5-ethyl-2-methyl-"
+mol219,"Octane, 6-ethyl-2-methyl-"
+mol220,"Octatriacontane, 3,5-dimethyl-"
+mol221,2-Methyltetracosane
+mol222,2-Methylpentacosane
+mol223,2-Methylheptacosane
+mol224,2-Methylhentriacontane
+mol225,"Undecane, 5,7-dimethyl-"
+mol226,"Undecane, 5,6-dimethyl-"
+mol227,2-Methyldocosane
+mol228,"Pentadecane, 3-methyl-"
+mol229,"Pentadecane, 4-methyl-"
+mol230,"Pentadecane, 5-methyl-"
+mol231,Z-14-Nonacosane
+mol232,"Nonadecane, 3-methyl-"
+mol233,"Nonadecane, 4-methyl-"
+mol234,"Nonane, 2,5-dimethyl-"
+mol235,"Undecane, 6-ethyl-"
+mol236,"Nonane, 2-methyl-5-propyl-"
+mol237,"Nonane, 3,7-dimethyl-"
+mol238,"Nonane, 3-methyl-5-propyl-"
+mol239,"Nonane, 4-ethyl-5-methyl-"
+mol240,"Nonane, 4-methyl-5-propyl-"
+mol241,"Nonane, 5-(1-methylpropyl)-"
+mol242,"Nonane, 5-(2-methylpropyl)-"
+mol243,"1,7-Dimethyl-4-(1-methylethyl)cyclodecane"
+mol244,3-Methyltetracosane
+mol245,"Nonane, 5-methyl-5-propyl-"
+mol246,"Nonane, 5-propyl-"
+mol247,"Octacosane, 2-methyl-"
+mol248,"Octadecane, 2,6-dimethyl-"
+mol249,"Undecane, 5-ethyl-"
+mol250,"1-Ethyl-2,2,6-trimethylcyclohexane"
+mol251,"Octadecane, 3-methyl-"
+mol252,"Octadecane, 5-methyl-"
+mol253,"Octadecane, 6-methyl-"
+mol254,"Tridecane, 2,5-dimethyl-"
+mol255,"Undecane, 3,9-dimethyl-"
+mol256,"Undecane, 3,8-dimethyl-"
+mol257,"Undecane, 3,7-dimethyl-"
+mol258,"Tridecane, 4-methyl-"
+mol259,"Undecane, 3,6-dimethyl-"
+mol260,"Tridecane, 5-methyl-"
+mol261,"Tridecane, 5-propyl-"
+mol262,"Tridecane, 6-methyl-"
+mol263,"Tridecane, 6-propyl-"
+mol264,"11,16-Bis-decyl-hexacosane"
+mol265,"Undecane, 3,5-dimethyl-"
+mol266,"Tritriacontane, 15,19-dimethyl-"
+mol267,"Undecane, 3,4-dimethyl-"
+mol268,"Undecane, 3,3-dimethyl-"
+mol269,"Tritriacontane, 3-methyl-"
+mol270,"Undecane, 2,10-dimethyl-"
+mol271,"Undecane, 2,3-dimethyl-"
+mol272,10-Methylnonadecane
+mol273,"Undecane, 2,7-dimethyl-"
+mol274,"Undecane, 2,8-dimethyl-"
+mol275,"Undecane, 2,9-dimethyl-"
+mol276,"Undecane, 5,5-dimethyl-"
+mol277,"Pentadecane, 7-methyl-"
+mol278,"Pentadecane, 8-heptyl-"
+mol279,"Pentadecane, 8-heptylidene-"
+mol280,"Undecane, 4-ethyl-"
+mol281,"Undecane, 4,8-dimethyl-"
+mol282,"2,6,10-Trimethyltridecane"
+mol283,"Pentatriacontane, 13-docosenylidene-"
+mol284,"2,3-Dimethyldecane"
+mol285,"Tetracontane, 3,5,24-trimethyl-"
+mol286,"1H-Indene, 1-ethyl-2,3-dihydro-1-methyl-"
+mol287,"Undecane, 4,7-dimethyl-"
+mol288,"Undecane, 4,6-dimethyl-"
+mol289,"Tetradecane, 2,5-dimethyl-"
+mol290,"Tetradecane, 2,6,10-trimethyl-"
+mol291,"Tetradecane, 2-methyl-"
+mol292,"Tetradecane, 3-methyl-"
+mol293,"Undecane, 4,4-dimethyl-"
+mol294,"Tetradecane, 4-ethyl-"
+mol295,"Tetradecane, 4-methyl-"
+mol296,"Undecane, 3-ethyl-"
+mol297,10-Methyldotriacontane
+mol298,13-Methylheptacosane
+mol299,"Decane, 2,3,7-trimethyl-"
+mol300,"Decane, 2,3,6-trimethyl-"
+mol301,"Decane, 2,3,5-trimethyl-"
+mol302,"Dodecane, 5-methyl-"
+mol303,"Decane, 2,3,5,8-tetramethyl-"
+mol304,Dotetracontane
+mol305,"Decane, 2,3,4-trimethyl-"
+mol306,"Dotriacontane, 2-methyl-"
+mol307,"Cycloundecane, 1,1,2-trimethyl-"
+mol308,"Cycloundecane, (1-methylethyl)-"
+mol309,"Eicosane, 2,4-dimethyl-"
+mol310,"Cyclopropane, 1-methyl-1-(2-methylpropyl)-2-nonyl-"
+mol311,"Cyclopropane, 1-methyl-1-(1-methylethyl)-2-nonyl-"
+mol312,"Cyclopropane, 1-(1,2-dimethylpropyl)-1-methyl-2-nonyl-"
+mol313,"Cyclooctadecane, ethyl-"
+mol314,"Cyclononane, 1,1,4,4,7,7-hexamethyl-"
+mol315,"Heneicosane, 10-methyl-"
+mol316,"Cyclohexane, 1,2-dimethyl-3-pentyl-4-propyl-"
+mol317,"Cyclohexane, 1,2,4,5-tetraethyl-, (1.alpha.,2.alpha.,4.alpha.,5.alpha.)-"
+mol318,"Cyclohexane, 1,2,4,5-tetraethyl-"
+mol319,"Cyclohexane, 1,2,3,5-tetraisopropyl-"
+mol320,"Cyclohexane, 1,2,3,4,5,6-hexaethyl-"
+mol321,"Cyclohexane, 1,1,3-trimethyl-2-(3-methylpentyl)-"
+mol322,"Cyclohexadecane, 1,2-diethyl-"
+mol323,"Hentriacontane, 3-methyl-"
+mol324,Cycloeicosane
+mol325,"Cyclododecane, ethyl-"
+mol326,"Heptadecane, 2,3-dimethyl-"
+mol327,"Heptadecane, 2,6,10,14-tetramethyl-"
+mol328,"Decane, 5,6-dimethyl-"
+mol329,"Decane, 5,6-dipropyl-"
+mol330,"Decane, 4-ethyl-"
+mol331,"Decane, 5-propyl-"
+mol332,"Decane, 6-ethyl-2-methyl-"
+mol333,"Decane, 3-ethyl-3-methyl-"
+mol334,"Decane, 3,8-dimethyl-"
+mol335,"Decane, 3,7-dimethyl-"
+mol336,"Docosane, 2,21-dimethyl-"
+mol337,"Docosane, 2,4-dimethyl-"
+mol338,"Decane, 3,6-dimethyl-"
+mol339,"Docosane, 6-methyl-"
+mol340,"Decane, 3,4-dimethyl-"
+mol341,"Decane, 3,3,8-trimethyl-"
+mol342,"Decane, 3,3,6-trimethyl-"
+mol343,"Decane, 3,3,5-trimethyl-"
+mol344,"Decane, 2,9-dimethyl-"
+mol345,"Decane, 2,8,8-trimethyl-"
+mol346,"Dodecane, 2,2,11,11-tetramethyl-"
+mol347,"Dodecane, 2,5-dimethyl-"
+mol348,"Decane, 2,6,6-trimethyl-"
+mol349,"Decane, 2,5,6-trimethyl-"
+mol350,"Dodecane, 2,7,10-trimethyl-"
+mol351,"Decane, 2,4-dimethyl-"
+mol352,"Decane, 2,4,6-trimethyl-"
+mol353,"Dodecane, 2-methyl-6-propyl-"
+mol354,"Dodecane, 2-methyl-8-propyl-"
+mol355,"Decane, 2,3,8-trimethyl-"
+mol356,"Dodecane, 3-methyl-"
+mol357,"Dodecane, 4,6-dimethyl-"
+mol358,"Nonadecane, 2,3-dimethyl-"
+mol359,"4,8-Dimethylheptacosne"
+mol360,"Nonacosane, 3-methyl-"
+mol361,4-Methyldocosane
+mol362,"Hexadecane, 7,9-dimethyl-"
+mol363,"Hexadecane, 4-methyl-"
+mol364,"Hexadecane, 3-methyl-"
+mol365,"Hexadecane, 2,6,10-trimethyl-"
+mol366,5-Ethyldecane
+mol367,5-Methyldocosane
+mol368,5-Methyltricosane
+mol369,"Cis-1,3-di(n-hexyl)cyclohexane"
+mol370,"Cyclobutane, 1-butyl-2-ethyl-"
+mol371,"Heptadecane, 2,6,10,15-tetramethyl-"
+mol372,"Heptadecane, 2,6-dimethyl-"
+mol373,"Heptadecane, 7-methyl-"
+mol374,"Cyclodocosane, ethyl-"
+mol375,"Heptadecane, 4-methyl-"
+mol376,"Cyclodecane, octyl-"
+mol377,Cyclododecane
+mol378,Cyclopentadecane
+mol379,Hexacontane
+mol380,1-Hexacosene
+mol381,Cyclohexadecane
+mol382,"Nonacosane, 2-methyl-"
+mol383,"4,4-Dipropylheptane"
+mol384,"2,6-Dimethyldecane"
+mol385,Tritetracontane
+mol386,"2,2,7,7-Tetramethyloctane"
+mol387,"2,2,6,6-Tetramethylheptane"
+mol388,5-Butyl-5-ethylheptadecane
+mol389,15-Methylheptatriacontane
+mol390,5-Butyl-5-ethylpentadecane
+mol391,5-Ethyl-5-methylheptadecane
+mol392,3-Ethyl-3-methylnonadecane
+mol393,9-methylheptadecane
+mol394,3-Ethyl-3-methylheptadecane
+mol395,7-Methyl-octadecane
+mol396,5-Ethyl-5-methylnonadecane
+mol397,3-Cyclohexylnonadecane
+mol398,"11,15-Dimethylhentriacontane"
+mol399,7-Cyclohexylnonadecane
+mol400,"3,5-Dimethyldodecane"
+mol401,"2,4-Dimethyldodecane"
+mol402,5-Ethylheptadecane
+mol403,"3,3-Dimethylnonadecane"
+mol404,10-Cyclohexylnonadecane
+mol405,"5,5-Diethyltridecane"
+mol406,"5,5-Diethylpentadecane"
+mol407,"5,5-Diethylheptadecane"
+mol408,3-Methyltricosane
+mol409,15-Methyltritriacontane
+mol410,"5,5-Dibutylnonane"
+mol411,"5,5,7,7-Tetraethylundecane"
+mol412,"5,15-Dimethylnonadecane"
+mol413,2-Cyclohexylnonadecane
+mol414,4-Cyclohexylnonadecane
+mol415,9-Methyltritriacontane
+mol416,"4,8,12-Trimethyldotriacontane"
+mol417,1-Cyclopentyleicosane
+mol418,17-Methyltritriacontane
+mol419,2-methyloctacosane
+mol420,Cyclotriacontane
+mol421,"13,17,21-Trimethylheptatriacontane"
+mol422,"3,3,13,13-Tetraethylpentadecane"
+mol423,"13,17,21-Trimethylpentatriacontane"
+mol424,"13,17,21-Trimethyltritriacontane"
+mol425,Cyclotetracosane
+mol426,"13,17-Dimethylhentriacontane"
+mol427,13-Methylhentriacontane
+mol428,6-Cyclohexylnonadecane
+mol429,13-Methylheptatriacontane
+mol430,13-Methyltritriacontane
+mol431,14-Methyldotriacontane
+mol432,"15,19-Dimethylheptatriacontane"
+mol433,"15,19-Dimethylpentatriacontane"
+mol434,Tetrapentacontane
+mol435,6-Methyltricosane
+mol436,"24-Norcholane, 23-[2-methyl-1-(1-methylethyl)cyclopropyl]-, (5.alpha.)-"
+mol437,"3,3-Dimethylheptadecane"
+mol438,"11,15-Dimethylheptatriacontane"
+mol439,"3,3-Diethyltridecane"
+mol440,5-Ethylnonadecane
+mol441,"7,7-Diethylheptadecane"
+mol442,Cyclooctacosane
+mol443,"11,15-Dimethylpentatriacontane"
+mol444,"11,15-Dimethyltritriacontane"
+mol445,"2,3-Dimethyldodecane"
+mol446,2-Methyltriacontane
+mol447,"3,3-Diethylpentadecane"
+mol448,11-Methylhentriacontane
+mol449,"3,3-Diethylheptadecane"
+mol450,"6,6-Diethylhexadecane"
+mol451,11-Methylheptacosane
+mol452,"6,6-Diethylhoctadecane"
+mol453,11-Methylnonacosane

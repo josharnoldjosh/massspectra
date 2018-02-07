@@ -14,7 +14,7 @@ from random import randint
 import time
 
 class nn:
-    def baseline_model(optimizer='Nadam', kernal_init='glorot_uniform', activation='relu', input_dim_val=1191, l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
+    def baseline_model(optimizer='Nadam', kernal_init='glorot_uniform', activation='relu', input_dim_val=1191, output_dim_val=800, l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
         model = Sequential()
         
         random_upper_bound = 50
@@ -31,12 +31,12 @@ class nn:
         model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
         model.add(Dropout(l2_d))  
         
-        model.add(Dense(activation=activation, input_dim=layer_3_weights, units=400, kernel_initializer=kernal_init))     
+        model.add(Dense(activation=activation, input_dim=layer_3_weights, units=output_dim_val, kernel_initializer=kernal_init))     
         model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
         return model
     
     # Train the model
-    def train_model(num_models_to_average, X_train, y_train, X_test, y_test):
+    def train_model(num_models_to_average, X_train, y_train, X_test, y_test, output_dim=800):
         # start timing the model
         t0 = time.time() 
         
@@ -49,8 +49,8 @@ class nn:
         
         for i in range(0,num_models_to_average):
             time.sleep(1)
-            model = nn.baseline_model(input_dim_val=X_train.shape[1])
-            result = model.fit(X_train, y_train, 
+            model = nn.baseline_model(input_dim_val=X_train.shape[1], output_dim_val=output_dim)
+            result = model.fit(X_train, y_train,                                
                                batch_size=40, epochs=settings.epoch_amount, 
                                validation_data=(X_test, y_test), 
                                callbacks=[earlystopping,checkpoint, tensorboard])

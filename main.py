@@ -1,6 +1,6 @@
 import settings
 from data import preprocessing
-from feature_selection import selector
+#from feature_selection import selector
 from model import nn
 import graph
 from data import postprocessing
@@ -23,7 +23,7 @@ X_train, X_test, y_train, y_test, y_test_mol_names = preprocessing.split_train_a
 X_train, X_test = preprocessing.scale_x_data(X_train, X_test)
         
 # train model & get y prediction
-models, model_results, y_pred, train_time = nn.train_model(settings.num_models_to_average, X_train, y_train, X_test, y_test)
+models, model_results, y_pred, train_time = nn.train_model(settings.num_models_to_average, X_train, y_train, X_test, y_test, output_dim=settings.output_dim)
 
 # print acc and loss graphs (optional)
 postprocessing.summarize_results(model_results)
@@ -38,8 +38,9 @@ msp.export("txt", "msp_txt", y_train, y_test, y_pred, y_test_mol_names)
 # Export a list of similarity values
 graph.save_list_of_sim_values_to_file("sim_value_output", "sim_values", y_pred, y_test, y_test_mol_names)
 
-# print average score and lost
+# print average score, loss, and cosine similarity
 postprocessing.print_all_scores(models, X_test, y_test)
 postprocessing.print_av_score(models, X_test, y_test, train_time)
+postprocessing.print_average_cosine_similarity(y_pred, y_test)
         
 print("Script finished.")

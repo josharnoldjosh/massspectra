@@ -16,7 +16,8 @@ from grid_search_manager import timer
 X_train, X_test, y_train, y_test, y_test_mol_names = helper.load_data()
 
 # Load grid search params
-search_data = grid_data.load_default_params()
+#search_data = grid_data.load_default_params()
+search_data = grid_data.load_refined_params()
 
 # Load checkpoint 
 current_checkpoint = checkpoint.current()
@@ -44,3 +45,5 @@ while True:
     if current_checkpoint == grid_data.max_number_of_checkpoints(search_data):
         print("Script finished after", current_checkpoint, "checkpoints.") 
         break    
+    else:
+        print("\n\n\n Max number of checkpoints!", grid_data.max_number_of_checkpoints(search_data))

@@ -6,6 +6,7 @@ Created on Wed Jan  3 15:56:28 2018
 @author: josharnold
 """
 
+import settings
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MaxAbsScaler
@@ -14,12 +15,16 @@ import numpy as np
 
 class preprocessing:
     def import_data():
-        # Import data set
-        data_filename = 'data.csv'
-        data = pd.read_csv(data_filename, sep=',', decimal='.', header=None)
-        y = data.loc[1:, 0:400].values
-        X = data.loc[1:, 401:1591].values
-        return X, y
+        # Load info from settings
+        filename=settings.filename 
+        num_x=settings.input_dim
+        num_y=settings.output_dim
+        
+        dir_name = 'data/' + filename
+        data = pd.read_csv(dir_name, sep=',', decimal='.', header=None)
+        y = data.loc[1:, 0:(num_y)]
+        X = data.loc[1:, (num_y+1):(num_y+num_x)]
+        return X.values, y.values
     
     def scale_x_data(X_train, X_test):
         scaler = MaxAbsScaler()
@@ -122,7 +127,7 @@ class postprocessing:
         return dot_product / (norm_a * norm_b)
     
     def get_molecule_name(molecule_name_number):
-        mol_names = pd.read_csv("mol_names.csv", sep=',', decimal='.', header=None).values
+        mol_names = pd.read_csv("data/mol_names.csv", sep=',', decimal='.', header=None).values
         molecule_name_for_graph = "Replace me"
         for molecule in mol_names:
             if (molecule[0] == molecule_name_number):
@@ -136,3 +141,7 @@ class postprocessing:
             total_sim_value += sim_value
         average = total_sim_value / len(y_pred)        
         return average
+
+    def print_average_cosine_similarity(y_pred, y_test):
+        print("Average cosine similarity:", postprocessing.get_average_cosine_similarity(y_pred, y_test))
+        return
