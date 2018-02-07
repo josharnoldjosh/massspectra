@@ -9,14 +9,14 @@ Created on Tue Jan  2 22:08:47 2018
 # Nerual network Parameters
 filename='data_v2.csv' # Name of file
 
-input_dim = 1191 # The X values
+input_dim = 1191 # The number of X values
 
-output_dim = 800 # The y values
+output_dim = 800 # The number of y values
 
 
 
 # SCRIPT PARAMTERES
-epoch_amount = 500 # the amount of epochs for training
+epoch_amount = 8000 # the amount of epochs for training
 
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 
@@ -29,9 +29,9 @@ show_and_save_all_plots = False # This overrides the number of comparison plots 
 # Graph Parameters
 peak_label_height = 500 # the threshold value to display the x value of a peak label, e.g "57", on the graph 
 
-graph_width = 27/3 # height of the graphs displayed
+graph_width = 27 # height of the graphs displayed
 
-graph_height = 8/3 # width of the graphs displayed (note there exists a glitch with peak label height if graphs are too narrow)
+graph_height = 8 # width of the graphs displayed (note there exists a glitch with peak label height if graphs are too narrow)
 
 graph_label_text_y_offset = 20 # the amount tot offset the labels on the graph of the peaks so they don't overlap the graphed bars
 

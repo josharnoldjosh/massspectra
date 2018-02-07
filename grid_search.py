@@ -16,8 +16,8 @@ from grid_search_manager import timer
 X_train, X_test, y_train, y_test, y_test_mol_names = helper.load_data()
 
 # Load grid search params
-#search_data = grid_data.load_default_params()
-search_data = grid_data.load_refined_params()
+search_data = grid_data.load_default_params()
+#search_data = grid_data.load_refined_params()
 
 # Load checkpoint 
 current_checkpoint = checkpoint.current()

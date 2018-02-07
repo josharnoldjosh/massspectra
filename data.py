@@ -92,8 +92,6 @@ class postprocessing:
         print('Test score:', av_acc_loss) 
         print('Average test accuracy:', av_acc_score)
         print("NN total train time: %dh:%02dm:%02ds" % (h, m, s))
-        print("")
-        print("")
         
     def print_all_scores(models, X_test, y_test):
         counter = 0

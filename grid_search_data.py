@@ -129,11 +129,11 @@ class grid_data:
         data.activations = ['softmax','softplus','softsign','relu','tanh','sigmoid','hard_sigmoid','linear']
         data.kernal_inits = ['uniform','lecun_uniform','normal','orthogonal','zero','one','glorot_normal','glorot_uniform', 'he_normal', 'he_uniform']
         
-        data.layer_weights = [[900, 800, 900], [500, 700, 500], [1000, 1200, 1000]]
-        data.dropout_weights = [[0.2, 0.2], [0.4, 0.4]]
+        data.layer_weights = [[900, 800, 900]]
+        data.dropout_weights = [[0.2, 0.2]]
         
-        data.batch_sizes = [20, 40]        
-        data.epochs = [10, 50, 100]
+        data.batch_sizes = [20]        
+        data.epochs = [20]
         
         return data
     
