@@ -51,7 +51,7 @@ class nn:
             time.sleep(1)
             model = nn.baseline_model(input_dim_val=X_train.shape[1], output_dim_val=output_dim)
             result = model.fit(X_train, y_train,                                
-                               batch_size=40, epochs=settings.epoch_amount, 
+                               batch_size=settings.batch_size, epochs=settings.epoch_amount, 
                                validation_data=(X_test, y_test), 
                                callbacks=[earlystopping,checkpoint, tensorboard])
             models.append(model)

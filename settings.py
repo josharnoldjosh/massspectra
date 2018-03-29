@@ -19,6 +19,8 @@ output_dim = 800 # The number of y values
 # SCRIPT PARAMTERES
 epoch_amount = 50 # the amount of epochs for training
 
+batch_size = 40
+
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 
 num_comparison_plots_to_show = 3 # number of spectrum similarity to show (don't make this over the max value otherwise it will crash)
