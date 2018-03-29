@@ -25,6 +25,8 @@ X_train, X_test = preprocessing.scale_x_data(X_train, X_test)
 # train model & get y prediction
 models, model_results, y_pred, train_time = nn.train_model(settings.num_models_to_average, X_train, y_train, X_test, y_test, output_dim=settings.output_dim)
 
+nn.summarize(models)
+
 # print acc and loss graphs (optional)
 postprocessing.summarize_results(model_results)
 

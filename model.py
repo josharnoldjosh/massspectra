@@ -61,3 +61,7 @@ class nn:
         train_time = t1-t0
             
         return models, results, postprocessing.return_av_y_pred(models, X_test, y_test), train_time
+    
+    def summarize(models):
+        for model in models:
+            model.summary()
