@@ -125,7 +125,7 @@ class postprocessing:
         return dot_product / (norm_a * norm_b)
     
     def get_molecule_name(molecule_name_number):
-        mol_names = pd.read_csv("data/mol_names.csv", sep=',', decimal='.', header=None).values
+        mol_names = pd.read_csv(settings.mol_name_data_dir, sep=',', decimal='.', header=None).values
         molecule_name_for_graph = "Replace me"
         for molecule in mol_names:
             if (molecule[0] == molecule_name_number):

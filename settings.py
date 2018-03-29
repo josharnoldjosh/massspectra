@@ -8,6 +8,7 @@ Created on Tue Jan  2 22:08:47 2018
 
 # Nerual network Parameters
 filename='data_v2.csv' # Name of file
+mol_name_data_dir = "data/mol_names.csv" # path to mol names data
 
 input_dim = 1191 # The number of X values
 
