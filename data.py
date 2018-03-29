@@ -132,6 +132,7 @@ class postprocessing:
                 molecule_name_for_graph = molecule[1]
         return molecule_name_for_graph
     
+    """
     def get_average_cosine_similarity(y_pred, y_test):
         total_sim_value = 0
         for i in range(0, len(y_pred)):              
@@ -139,6 +140,18 @@ class postprocessing:
             total_sim_value += sim_value
         average = total_sim_value / len(y_pred)        
         return average
+    """
+    
+    def get_average_cosine_similarity(y_pred, y_test):
+        import warnings
+        with warnings.catch_warnings(): 
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                total_sim_value = 0
+                for i in range(0, len(y_pred)):              
+                    sim_value = postprocessing.cos_sim((y_test[i].astype(np.float)), y_pred[i].astype(np.float)) 
+                    total_sim_value += np.nan_to_num(sim_value)
+                average = total_sim_value / len(y_pred)
+                return average
 
     def print_average_cosine_similarity(y_pred, y_test):
         print("Average cosine similarity:", postprocessing.get_average_cosine_similarity(y_pred, y_test))
