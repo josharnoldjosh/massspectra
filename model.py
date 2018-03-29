@@ -36,7 +36,7 @@ class nn:
         return model
     
     # Train the model
-    def train_model(num_models_to_average, X_train, y_train, X_test, y_test, output_dim=800):
+    def train_model(num_models_to_average, X_train, y_train, X_test, y_test):
         # start timing the model
         t0 = time.time() 
         
@@ -49,7 +49,7 @@ class nn:
         
         for i in range(0,num_models_to_average):
             time.sleep(1)
-            model = nn.baseline_model(input_dim_val=X_train.shape[1], output_dim_val=output_dim)
+            model = nn.baseline_model(input_dim_val=X_train.shape[1], output_dim_val=settings.output_dim)
             result = model.fit(X_train, y_train,                                
                                batch_size=settings.batch_size, epochs=settings.epoch_amount, 
                                validation_data=(X_test, y_test), 
