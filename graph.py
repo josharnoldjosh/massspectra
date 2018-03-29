@@ -37,6 +37,7 @@ def get_left_trim_value(y_value_array):
             # we want to stop triming here
             prediction_j_trim_value = j
             break;
+    return 0;
     return prediction_j_trim_value
 
 def get_trim_values(y_pred, y_actual):
