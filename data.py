@@ -48,7 +48,7 @@ class preprocessing:
         
     # Split data into test and train sets
     def split_train_and_test_data(X, y):
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)        
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=settings.test_train_split_value, random_state=0)        
         y_train, y_test, y_test_mol_names = preprocessing.drop_mol_names_from_y_train_and_test(y_train, y_test)        
         return X_train, X_test, y_train, y_test, y_test_mol_names
 
@@ -113,7 +113,7 @@ class postprocessing:
         counter = 1
         for model in models:
             if (model != models[0]):
-                y_pred = model.predict(X_test) 
+                y_pred = model.predict(X_test)                 
                 y_pred_total = y_pred_total + y_pred
                 counter += 1
         return y_pred_total / counter
@@ -122,7 +122,8 @@ class postprocessing:
         dot_product = np.dot(a, b)
         norm_a = np.linalg.norm(a)
         norm_b = np.linalg.norm(b)
-        return dot_product / (norm_a * norm_b)
+        res = dot_product / (norm_a * norm_b)
+        return res 
     
     def get_molecule_name(molecule_name_number):
         mol_names = pd.read_csv(settings.mol_name_data_dir, sep=',', decimal='.', header=None).values
@@ -131,16 +132,6 @@ class postprocessing:
             if (molecule[0] == molecule_name_number):
                 molecule_name_for_graph = molecule[1]
         return molecule_name_for_graph
-    
-    """
-    def get_average_cosine_similarity(y_pred, y_test):
-        total_sim_value = 0
-        for i in range(0, len(y_pred)):              
-            sim_value = postprocessing.cos_sim((y_test[i].astype(np.float)), y_pred[i]) 
-            total_sim_value += sim_value
-        average = total_sim_value / len(y_pred)        
-        return average
-    """
     
     def get_average_cosine_similarity(y_pred, y_test):
         import warnings
@@ -153,6 +144,6 @@ class postprocessing:
                 average = total_sim_value / len(y_pred)
                 return average
 
-    def print_average_cosine_similarity(y_pred, y_test):
+    def print_average_cosine_similarity(y_pred, y_test):        
         print("Average cosine similarity:", postprocessing.get_average_cosine_similarity(y_pred, y_test))
         return
