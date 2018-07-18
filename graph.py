@@ -18,7 +18,7 @@ def get_right_trim_value(y_value_array):
     # search predicted values and limit the graph to the smallest value to "beautify" the graph from right
     prediction_j_trim_value = 0
     for j in range(0, len_y_value):        
-        index_cut_value = len_y_value - j - 1
+        index_cut_value = len_y_value - j -1
         
         peak_height_value = y_value_array[index_cut_value] # start at the very right of graph, e.g, number         
         if (peak_height_value > settings.graph_trim_peak_height):
@@ -91,7 +91,7 @@ def plot_mass_spectra_graph(y_pred_value, y_test_negative, mol_name_number):
             # now label 
             x_value_for_label = j - x_offset
             y_value_for_label = y_test_negative[j] - settings.graph_label_text_y_offset - 25
-            string_value_for_label = str(j)
+            string_value_for_label = str(j+1)
             plt.text(x_value_for_label, y_value_for_label, string_value_for_label)
             
     # label the peaks of predicted values
@@ -100,7 +100,7 @@ def plot_mass_spectra_graph(y_pred_value, y_test_negative, mol_name_number):
             # now label 
             x_value_for_label = j - x_offset
             y_value_for_label = y_pred_value[j] + settings.graph_label_text_y_offset
-            string_value_for_label = str(j)
+            string_value_for_label = str(j+1)
             plt.text(x_value_for_label, y_value_for_label, string_value_for_label)
             
     # add sim value
