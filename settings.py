@@ -7,6 +7,7 @@ Created on Tue Jan  2 22:08:47 2018
 """
 
 # Data import parameters
+
 test_train_split_value = 0.2
 
 # Nerual network Parameters
@@ -24,7 +25,7 @@ batch_size = 40
 
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 
-num_comparison_plots_to_show = 20 # number of spectrum similarity to show (don't make this over the max value otherwise it will crash)
+num_comparison_plots_to_show = 1 # number of spectrum similarity to show (don't make this over the max value otherwise it will crash)
 
 show_and_save_all_plots = False # This overrides the number of comparison plots to show and plots the max number of plots
 
