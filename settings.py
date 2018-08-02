@@ -6,30 +6,28 @@ Created on Tue Jan  2 22:08:47 2018
 @author: josharnold
 """
 
-# Data import parameters
-
-test_train_split_value = 0.2
-
 # Nerual network Parameters
-filename='data_v2.csv' # Name of file
-mol_name_data_dir = "data/mol_names.csv" # path to mol names data
+filename='MONADB-EI-7017x500.csv' # Name of file alkane=data_v2.csv
+mol_name_data_dir = "data/MONADB-EI-7017x500-names.csv" # path to mol names data
 
-input_dim = 1191 # The number of X values
+input_dim = 2858 # The number of X values alkanes=(1191)
 
-output_dim = 800 # The number of y values
+output_dim = 500 # The number of y values alkanes=(800)
 
 # SCRIPT PARAMTERES
-epoch_amount = 20 # the amount of epochs for training
+epoch_amount = 800 # the amount of epochs for training
 
-batch_size = 40
+batch_size = 100 # originally 40, but batch size of 20 gives better results
 
-num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
+num_models_to_average = 20 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 
-num_comparison_plots_to_show = 1 # number of spectrum similarity to show (don't make this over the max value otherwise it will crash)
+num_comparison_plots_to_show = 5 # number of spectrum similarity to show (don't make this over the max value otherwise it will crash)
 
 show_and_save_all_plots = False # This overrides the number of comparison plots to show and plots the max number of plots
 
+# Data import parameters
 
+test_train_split_value = 0.2
 
 # Graph Parameters
 peak_label_height = 500 # the threshold value to display the x value of a peak label, e.g "57", on the graph 

@@ -13,8 +13,8 @@ from keras.layers import Dense, Dropout
 from random import randint
 import time
 
-class nn:
-    def baseline_model(optimizer='Nadam', kernal_init='glorot_uniform', activation='relu', input_dim_val=1191, output_dim_val=800, l1_w=900, l2_w=800, l3_w=900, l1_d=0.2, l2_d=0.2):
+class nn: 
+    def baseline_model(optimizer='Nadam', kernal_init='glorot_uniform', activation='relu', input_dim_val=2858, output_dim_val=500, l1_w=2500, l2_w=2500, l3_w=2500, l1_d=0.4, l2_d=0.4):
         model = Sequential()
         
         random_upper_bound = 50
@@ -25,12 +25,21 @@ class nn:
         layer_2_weights = l2_w + randint(0,random_upper_bound)
         layer_3_weights = l3_w + randint(0,random_upper_bound)
     
-        model.add(Dense(activation=activation, input_dim=input_dim_val, units=layer_1_weights, kernel_initializer=kernal_init))
+        model.add(Dense(activation=activation, input_dim=input_dim_val, units=layer_1_weights, kernel_initializer=kernal_init, 
+                        kernel_regularizer = regularizers.l1_l2(l1=0.01, l2=0.01)))
         model.add(Dropout(l1_d))   
          
-        model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
+        model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation ))
         model.add(Dropout(l2_d))  
         
+        model.add(GaussianNoise(30))
+        
+        #model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
+        #model.add(Dropout(l2_d))  
+ 
+        #model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
+        #model.add(Dropout(l2_d))  
+  
         model.add(Dense(activation=activation, input_dim=layer_3_weights, units=output_dim_val, kernel_initializer=kernal_init))     
         model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
         return model
