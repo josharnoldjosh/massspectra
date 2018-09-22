@@ -9,7 +9,9 @@ import settings
 from data import postprocessing
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.models import Sequential 
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, GaussianNoise
+from keras import regularizers
+
 from random import randint
 import time
 
@@ -41,7 +43,7 @@ class nn:
         #model.add(Dropout(l2_d))  
   
         model.add(Dense(activation=activation, input_dim=layer_3_weights, units=output_dim_val, kernel_initializer=kernal_init))     
-        model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=["accuracy","mean_squared_error"])
+        model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=settings.model_metrics)
         return model
     
     # Train the model

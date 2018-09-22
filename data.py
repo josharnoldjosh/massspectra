@@ -55,7 +55,11 @@ class preprocessing:
 class postprocessing:
     def summarize_results(results):
         for result in results:
-            # summarize history for accuracy
+            for i in result.history:
+                plt.plot(result.history[i])
+                plt.title("Plot #" + str(i))
+                plt.show()
+            """# summarize history for accuracy
             plt.plot(result.history['acc'])
             plt.plot(result.history['val_acc'])
             plt.title('model accuracy')
@@ -71,7 +75,7 @@ class postprocessing:
             plt.ylabel('loss')
             plt.xlabel('epoch')
             plt.legend(['train', 'test'], loc='upper left')
-            plt.show()
+            plt.show()"""
             
     def print_av_score(models, X_test, y_test, train_time):
         total_acc = 0
