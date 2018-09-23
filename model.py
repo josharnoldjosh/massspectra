@@ -36,12 +36,6 @@ class nn:
         
         model.add(GaussianNoise(30))
         
-        #model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
-        #model.add(Dropout(l2_d))  
- 
-        #model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation))
-        #model.add(Dropout(l2_d))  
-  
         model.add(Dense(activation=activation, input_dim=layer_3_weights, units=output_dim_val, kernel_initializer=kernal_init))     
         model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=settings.model_metrics)
         return model
@@ -62,7 +56,7 @@ class nn:
         
         for i in range(0,num_models_to_average):
             time.sleep(1)
-            model = nn.baseline_model(input_dim_val=X_train.shape[1], output_dim_val=settings.output_dim)
+            model = nn.baseline_model(input_dim_val=X_train.shape[1], output_dim_val=y_train.shape[1])
             result = model.fit(X_train, y_train,                                
                                batch_size=settings.batch_size, epochs=settings.epoch_amount, 
                                validation_data=(X_test, y_test), 

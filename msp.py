@@ -6,16 +6,16 @@ Created on Wed Jan  3 16:12:02 2018
 @author: josharnold
 """
 
-from data import postprocessing
+from data import data_bucket, postprocessing
 import os
 
-def export(extension, directory, y_train, y_test, y_pred, y_test_mol_names):
+def export(extension, directory, y_train, y_test, y_pred):
     if not os.path.exists(directory):
         os.makedirs(directory)
     
     for i in range(0, y_test.shape[0]):  
-        # open    
-        molecule_name = postprocessing.get_molecule_name(y_test_mol_names[i])
+        # open            
+        molecule_name = data_bucket.mol_names_y_test[i]
         
         file_name = directory + "/" + molecule_name + "." + extension
         f = open(file_name, "w+")
@@ -47,7 +47,7 @@ def export(extension, directory, y_train, y_test, y_pred, y_test_mol_names):
         # close
         f.close()
 
-def export_single_MSP(extension, directory, y_train, y_test, y_pred, y_test_mol_names):
+def export_single_MSP(extension, directory, y_train, y_test, y_pred):
     if not os.path.exists(directory):
         os.makedirs(directory)
         
@@ -56,7 +56,7 @@ def export_single_MSP(extension, directory, y_train, y_test, y_pred, y_test_mol_
     
     for i in range(0, y_test.shape[0]):  
         # name
-        molecule_name = postprocessing.get_molecule_name(y_test_mol_names[i])
+        molecule_name = data_bucket.mol_names_y_test[i]
         f.write("Name: " + molecule_name + "\n")
         f.write("Formula:\n")
         f.write("MW:\n")

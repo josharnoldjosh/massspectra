@@ -10,21 +10,15 @@ import settings
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MaxAbsScaler
-import matplotlib.pyplot as plt
 import numpy as np
+
+class data_bucket:
+    mol_names_y_test = []
 
 class preprocessing:
     def import_data():
-        # Load info from settings
-        filename=settings.filename 
-        num_x=settings.input_dim
-        num_y=settings.output_dim
-        
-        dir_name = 'data/' + filename
-        data = pd.read_csv(dir_name, sep=',', decimal='.', header=None)
-        y = data.loc[1:, 0:(num_y)]
-        X = data.loc[1:, (num_y+1):(num_y+num_x)]
-        return X.values, y.values
+        X, y = settings.import_data()
+        return X, y
     
     def scale_x_data(X_train, X_test):
         scaler = MaxAbsScaler()
@@ -32,33 +26,28 @@ class preprocessing:
         X_test = scaler.fit_transform(X_test)
         return X_train, X_test
     
-    def drop_mol_names_from_y_train_and_test(y_train, y_test):      
-        y_test_mol_names = []
-        
+    def drop_mol_names_from_y_train_and_test(y_train, y_test):              
         y_train_new = []
         for i in range(0, len(y_train)):
             y_train_new.append(np.delete(y_train[i], 0).tolist())
             
         y_test_new = []
         for i in range(0, len(y_test)):
-            y_test_mol_names.append(y_test[i][0])
-            y_test_new.append(np.delete(y_test[i], 0).tolist())    
+            data_bucket.mol_names_y_test.append(y_test[i][0])
+            y_test_new.append(np.delete(y_test[i], 0).tolist())
         
-        return np.asarray(y_train_new), np.asarray(y_test_new), y_test_mol_names
+        return np.asarray(y_train_new), np.asarray(y_test_new)
         
     # Split data into test and train sets
     def split_train_and_test_data(X, y):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=settings.test_train_split_value, random_state=0)        
-        y_train, y_test, y_test_mol_names = preprocessing.drop_mol_names_from_y_train_and_test(y_train, y_test)        
-        return X_train, X_test, y_train, y_test, y_test_mol_names
+        y_train, y_test = preprocessing.drop_mol_names_from_y_train_and_test(y_train, y_test)        
+        return X_train, X_test, y_train, y_test
 
 class postprocessing:
     def summarize_results(results):
         for result in results:
-            for i in result.history:
-                plt.plot(result.history[i])
-                plt.title("Plot #" + str(i))
-                plt.show()
+            settings.plot_result(result.history)
             """# summarize history for accuracy
             plt.plot(result.history['acc'])
             plt.plot(result.history['val_acc'])
@@ -130,12 +119,7 @@ class postprocessing:
         return res 
     
     def get_molecule_name(molecule_name_number):
-        mol_names = pd.read_csv(settings.mol_name_data_dir, sep=',', decimal='.', header=None).values
-        molecule_name_for_graph = "Replace me"
-        for molecule in mol_names:
-            if (molecule[0] == molecule_name_number):
-                molecule_name_for_graph = molecule[1]
-        return molecule_name_for_graph
+        return data_bucket.mol_names_y_test[int(molecule_name_number)]
     
     def get_average_cosine_similarity(y_pred, y_test):
         import warnings
