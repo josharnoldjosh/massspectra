@@ -35,18 +35,20 @@ Plotting functions.
 def plot_result(result):
     import matplotlib.pyplot as plt 
 
-    plt.plot(result["r_square"])
-    plt.plot(result["val_r_square"])
+    plt.plot(result["r_square"], label="train")
+    plt.plot(result["val_r_square"], label="validation") # Add val infront of metrics for the validation
     plt.title("R^2")
     plt.ylabel('R^2')
     plt.xlabel('Epoch')
+    plt.legend()
     plt.show()
     
-    plt.plot(result["mean_squared_error"])
-    plt.plot(result["val_mean_squared_error"])
+    plt.plot(result["mean_squared_error"], label="train")
+    plt.plot(result["val_mean_squared_error"], label="validation")
     plt.title("Mean Squared Error")
     plt.ylabel('MSE')
     plt.xlabel('Epoch')
+    plt.legend(loc="upper right")
     plt.show()
     
     print("\n\nPossible dictionary keys include:", result.keys(), "\n\n")
@@ -54,7 +56,7 @@ def plot_result(result):
     return
 
 # SCRIPT PARAMTERES
-epoch_amount = 25 # the amount of epochs for training
+epoch_amount = 50 # the amount of epochs for training
 batch_size = 20 # originally 40, but batch size of 20 gives better results
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 test_train_split_value = 0.2
