@@ -9,7 +9,7 @@ import settings
 from data import postprocessing
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 from keras.models import Sequential 
-from keras.layers import Dense, Dropout, GaussianNoise
+from keras.layers import Dense, Dropout, GaussianNoise, BatchNormalization
 from keras import regularizers
 
 from random import randint
@@ -26,16 +26,18 @@ class nn:
         layer_1_weights = l1_w + randint(0,random_upper_bound)
         layer_2_weights = l2_w + randint(0,random_upper_bound)
         layer_3_weights = l3_w + randint(0,random_upper_bound)
-    
+        
         model.add(Dense(activation=activation, input_dim=input_dim_val, units=layer_1_weights, kernel_initializer=kernal_init, 
                         kernel_regularizer = regularizers.l1_l2(l1=0.01, l2=0.01)))
         model.add(Dropout(l1_d))   
          
+        model.add(BatchNormalization())
         model.add(Dense(layer_2_weights, kernel_initializer=kernal_init, activation=activation ))
         model.add(Dropout(l2_d))  
         
         model.add(GaussianNoise(30))
         
+        model.add(BatchNormalization())
         model.add(Dense(activation=activation, input_dim=layer_3_weights, units=output_dim_val, kernel_initializer=kernal_init))     
         model.compile(optimizer=optimizer, loss="mean_squared_error", metrics=settings.model_metrics)
         return model
