@@ -20,6 +20,15 @@ def import_data():
     return X.values, y.values
 
 """
+K - fold cross validation import
+"""
+def import_data_for_k_fold():
+    import pandas as pd
+    filename = "data/alkanes.csv"
+    df = pd.read_csv(filename, sep=',', decimal='.', header=1)
+    return df
+
+"""
 Loss function to optimize.
 """
 def r_square(y_true, y_pred):
@@ -56,7 +65,7 @@ def plot_result(result):
     return
 
 # SCRIPT PARAMTERES
-epoch_amount = 50 # the amount of epochs for training
+epoch_amount = 5 #50 # the amount of epochs for training
 batch_size = 20 # originally 40, but batch size of 20 gives better results
 num_models_to_average = 1 # average multiple models, if 1, no random neurons are added for the model because slightly different models are generated when averaging
 test_train_split_value = 0.2

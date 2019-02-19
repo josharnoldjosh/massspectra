@@ -12,6 +12,33 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MaxAbsScaler
 import numpy as np
 
+class KFold:    
+    def __init__(self, num_k_fold=5):
+        self.data = settings.import_data_for_k_fold()
+        from sklearn.model_selection import KFold
+        self.kf = KFold(n_splits = num_k_fold, shuffle = True, random_state = 2).split(self.data)
+        self.fold = 0
+        self.num_k_fold = num_k_fold
+
+    def process_data(self, df):
+        X = df.loc[:, 'x1':'x1191'] 
+        y = df.loc[:, 'y1':'y800']
+        mol_names = df.loc[:, 'NAME']
+        y = pd.concat([mol_names, y], axis=1) # y must have molecule names as first column 
+        return X.values, y.values
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.fold += 1
+        if self.fold > self.num_k_fold:
+            raise StopIteration
+        split = next(self.kf, None)
+        train = self.data.iloc[split[0]]
+        test = self.data.iloc[split[1]]
+        return self.process_data(train), self.process_data(test)
+
 class data_bucket:
     mol_names_y_test = []
 
@@ -84,10 +111,11 @@ class postprocessing:
         print("")
         print('Test score:', av_acc_loss) 
         print('Average test accuracy:', av_acc_score)
-        print("NN total train time: %dh:%02dm:%02ds" % (h, m, s))
+        print("NN total train time: %dh:%02dm:%02ds" % (h, m, s))        
         
     def print_all_scores(models, X_test, y_test):
         counter = 0
+        i = 0
         for model in models:
             counter += 1
             score = model.evaluate(X_test, y_test)
@@ -134,4 +162,4 @@ class postprocessing:
 
     def print_average_cosine_similarity(y_pred, y_test):        
         print("Average cosine similarity:", postprocessing.get_average_cosine_similarity(y_pred, y_test))
-        return
+        return postprocessing.get_average_cosine_similarity(y_pred, y_test)
